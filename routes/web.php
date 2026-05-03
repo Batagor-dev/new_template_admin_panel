@@ -17,9 +17,17 @@ Route::get('/', function () {
     return view('halaman.index');
 })->name('home');
 
+<<<<<<< HEAD
 Route::get('/booking', function () {
     return view('halaman.booking');
 })->name('booking');
+=======
+// Route untuk memicu login Google
+Route::get('/auth/google', [App\Http\Controllers\SocialiteController::class, 'redirectToGoogle'])->name('google.login');
+
+// Route callback tempat Google mengirim data kembali
+Route::get('/auth/google/callback', [App\Http\Controllers\SocialiteController::class, 'handleGoogleCallback']);
+>>>>>>> bd738b4 (penambahan auth google dan verfikasi)
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

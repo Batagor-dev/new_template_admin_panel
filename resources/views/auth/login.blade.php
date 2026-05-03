@@ -46,6 +46,21 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
 
+                <!-- Divider "OR" -->
+                <div class="d-flex align-items-center my-4">
+                    <hr class="flex-grow-1">
+                    <span class="mx-3 text-muted" style="font-size: 0.85rem;">OR</span>
+                    <hr class="flex-grow-1">
+                </div>
+
+                <!-- Google Login Button -->
+                <div class="d-grid gap-2 mb-3">
+                    <a href="{{ route('google.login') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center shadow-sm">
+                        <img src="https://authjs.dev/img/providers/google.svg" alt="Google Logo" width="18" class="me-2">
+                        Continue with Google
+                    </a>
+                </div>
+
                 <!-- Forgot Password -->
                 <div class="text-center mb-3">
                     <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a>

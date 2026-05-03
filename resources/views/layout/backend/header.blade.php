@@ -420,13 +420,18 @@
         <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
           <div class="avatar avatar-online">
             <img 
-                src="{{ Auth::user()->foto == '1.png' 
-                ? asset('assets/img/avatars/' . Auth::user()->foto) 
-                : asset('storage/uploads/avatars/' . Auth::user()->foto) }}" 
-                alt="avatar" 
-                class="rounded-circle" 
-            />
-          </div>
+              src="{{ 
+                  Auth::user()->foto == '1.png' 
+                  ? asset('assets/img/avatars/1.png') 
+                  : (Str::startsWith(Auth::user()->foto, ['http://', 'https://']) 
+                      ? Auth::user()->foto 
+                      : asset('storage/uploads/avatars/' . Auth::user()->foto)) 
+              }}" 
+              alt="avatar" 
+              class="rounded-circle" 
+              style="width: 40px; height: 40px; object-fit: cover;"
+          />
+                    </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
           <li>
@@ -435,9 +440,13 @@
                 <div class="flex-shrink-0 me-2">
                   <div class="avatar avatar-online">
                     <img 
-                        src="{{ Auth::user()->foto == '1.png' 
-                        ? asset('assets/img/avatars/' . Auth::user()->foto) 
-                        : asset('storage/uploads/avatars/' . Auth::user()->foto) }}"
+                        src="{{ 
+                            Auth::user()->foto == '1.png' 
+                            ? asset('assets/img/avatars/1.png') 
+                            : (Str::startsWith(Auth::user()->foto, ['http://', 'https://']) 
+                                ? Auth::user()->foto 
+                                : asset('storage/uploads/avatars/' . Auth::user()->foto)) 
+                        }}" 
                         alt="avatar" 
                         class="rounded-circle" 
                     />
