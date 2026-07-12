@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@yield('title', 'Login')</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <div class="flex min-h-screen items-center justify-center px-4 py-10">
+      <div class="w-full max-w-md rounded-3xl border border-slate-200 bg-white/95 p-8 shadow-xl shadow-slate-300/40 backdrop-blur-sm">
+        <div class="mb-8 text-center">
+          <a href="{{ route('home') }}" class="text-2xl font-semibold text-slate-900">
+            @yield('brand', 'Techarea')
+          </a>
+          <p class="mt-2 text-sm text-slate-500">
+            @yield('subtitle', 'Masuk untuk mengelola aplikasi.')
+          </p>
+        </div>
+
+        @yield('content')
+      </div>
+    </div>
+
+    @stack('scripts')
+  </body>
+</html>

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome.index');
+    return view('welcome');
 })->name('home');
 
 // Route untuk memicu login Google
