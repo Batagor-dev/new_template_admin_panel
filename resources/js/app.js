@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const setInitialHeight = () => {
             if (button.getAttribute("aria-expanded") === "true") {
-                target.style.maxHeight = `${target.scrollHeight}px`;
+                target.style.maxHeight = "none";
             } else {
                 target.style.maxHeight = "0px";
             }
@@ -34,17 +34,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setInitialHeight();
 
+        const handleTransitionEnd = () => {
+            if (button.getAttribute("aria-expanded") === "true") {
+                target.style.maxHeight = "none";
+            }
+        };
+
         button.addEventListener("click", () => {
             const isExpanded = button.getAttribute("aria-expanded") === "true";
-            button.setAttribute("aria-expanded", String(!isExpanded));
+            target.removeEventListener("transitionend", handleTransitionEnd);
 
             if (isExpanded) {
                 target.style.maxHeight = `${target.scrollHeight}px`;
+                // Force repaint
+                target.offsetHeight;
+
+                button.setAttribute("aria-expanded", "false");
                 requestAnimationFrame(() => {
                     target.style.maxHeight = "0px";
                 });
             } else {
+                button.setAttribute("aria-expanded", "true");
                 target.style.maxHeight = `${target.scrollHeight}px`;
+                target.addEventListener("transitionend", handleTransitionEnd, { once: true });
             }
         });
 

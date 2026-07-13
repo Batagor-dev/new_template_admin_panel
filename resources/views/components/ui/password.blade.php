@@ -15,7 +15,7 @@
         {{ $required ? 'required' : '' }}
         data-password-input
         {{ $attributes->merge([
-            'class' => 'block w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 pr-12 text-sm text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-200 ' . $class
+            'class' => 'block w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 pr-12 text-base font-satoshi-medium text-slate-900 outline-none transition focus:border-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-200 ' . $class
         ]) }}
     >
 

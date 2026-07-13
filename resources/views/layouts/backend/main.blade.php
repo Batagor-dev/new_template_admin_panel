@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-50">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@yield('title', 'Admin Panel')</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
+  </head>
+  <body class="h-full text-slate-900 antialiased flex font-satoshi">
+    <!-- Sidebar component -->
+    <x-layout.admin.sidebar />
+
+    <!-- Main Container -->
+    <div class="flex-1 flex flex-col min-w-0 lg:pl-[280px] min-h-screen">
+      <!-- Header component -->
+      <x-layout.admin.header :sub_title="View::yieldContent('sub_title')" />
+
+      <!-- Main Body -->
+      <main class="flex-1 p-6 md:p-8 flex flex-col">
+        <!-- Breadcrumb section -->
+        <div class="mb-6">
+          @yield('breadcrumb')
+        </div>
+
+        <!-- Content slot -->
+        <div class="flex-1">
+          @yield('content')
+        </div>
+      </main>
+
+      <!-- Footer component -->
+      <x-layout.admin.footer />
+    </div>
+
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById('admin-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        if (sidebar && overlay) {
+          const isHidden = sidebar.classList.contains('-translate-x-full');
+          if (isHidden) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+          }
+        }
+      }
+    </script>
+    @stack('scripts')
+  </body>
+</html>

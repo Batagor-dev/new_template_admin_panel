@@ -10,7 +10,7 @@ class SidebarServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        View::composer('layout.backend.sidebar', function ($view) {
+        View::composer(['components.layout.admin.sidebar', 'layout.backend.sidebar'], function ($view) {
             $menus = Menu::whereNull('menu_id')
                 ->where('status', 1)
                 ->with('children')

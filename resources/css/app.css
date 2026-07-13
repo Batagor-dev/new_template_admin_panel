@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
+/* Satoshi Variable Font */
+@font-face {
+    font-family: "Satoshi";
+    src: url("/assets/fonts/satoshi/Satoshi-Variable.ttf") format("truetype");
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-sans: "Satoshi", sans-serif;
+    --font-satoshi: "Satoshi", sans-serif;
+}
+
+/* Utility */
+.font-satoshi {
+    font-family: "Satoshi", sans-serif;
+}
+
+.font-satoshi-light {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 300;
+}
+
+.font-satoshi-regular {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 400;
+}
+
+.font-satoshi-medium {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 500;
+}
+
+.font-satoshi-semibold {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 600;
+}
+
+.font-satoshi-bold {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 700;
+}
+
+.font-satoshi-black {
+    font-family: "Satoshi", sans-serif;
+    font-weight: 900;
+}
+
 @source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
