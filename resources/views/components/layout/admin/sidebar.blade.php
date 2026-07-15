@@ -3,7 +3,7 @@
 @endphp
 
 <!-- Tambahkan class 'group transition-all duration-300' di tag aside -->
-<aside id="admin-sidebar" class="group fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
+<aside id="admin-sidebar" class="group fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-white transition-all duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
   
   <!-- Brand Header -->
   <div class="flex h-20 items-center justify-between px-5 border-b border-slate-100 group-[.sidebar-collapsed]:justify-center group-[.sidebar-collapsed]:px-0 transition-all duration-300">
@@ -15,7 +15,7 @@
     
     <!-- BUTTON TOGGLE DESKTOP (Icon panah dinamis ganti-ganti) -->
     <button type="button" class="hidden lg:flex h-8 w-8 items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer group-[.sidebar-collapsed]:hidden" onclick="toggleSidebarMode()">
-      <i class="ri-arrow-left-double-line text-xl"></i>
+      <i class="ri-arrow-left-double-line text-2xl"></i>
     </button>
   </div>
 

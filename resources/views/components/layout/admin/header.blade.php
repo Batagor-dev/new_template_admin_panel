@@ -1,6 +1,6 @@
 @props(['sub_title' => ''])
 
-<header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white/95 px-10 lg:px-16 xl:px-20 py-10 backdrop-blur-sm shadow-xs">
+<header class="sticky top-0 z-30 flex h-20 items-center bg-white justify-between px-10 lg:px-16 xl:px-20 py-10">
   <div class="flex items-center gap-4">
     <!-- Mobile Sidebar Toggle -->
     <button type="button" class="lg:hidden text-slate-500 hover:text-slate-900 transition-colors cursor-pointer" onclick="toggleSidebar()">
@@ -15,20 +15,20 @@
   <div class="flex items-center gap-4">
     <!-- Fullscreen Button -->
     <button type="button" id="btn-fullscreen" class="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer">
-      <i class="ri-fullscreen-line text-xl"></i>
+      <i class="ri-fullscreen-line text-2xl"></i>
     </button>
 
     <!-- User Profile Dropdown -->
     <div class="relative" id="profile-dropdown-wrapper">
       <button type="button" id="btn-profile-dropdown" class="flex items-center gap-2.5 p-1 rounded-xl hover:bg-slate-50 transition-all cursor-pointer" onclick="toggleProfileDropdown()">
         @php
-            $avatar = 'assets/img/avatar/avatar-1.jpg';
+            $avatar = 'assets/img/avatar/avatar-2.jpg';
 
             if (
                 Auth::user()->foto &&
-                file_exists(public_path('assets/img/avatars/' . Auth::user()->foto))
+                file_exists(public_path('assets/img/avatar/' . Auth::user()->foto))
             ) {
-                $avatar = 'assets/img/avatars/' . Auth::user()->foto;
+                $avatar = 'assets/img/avatar/' . Auth::user()->foto;
             }
         @endphp
         

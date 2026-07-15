@@ -1,10 +1,19 @@
 <!doctype html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en" class="h-full bg-[#f7f7f7]">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Admin Panel')</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{{ settings()['title'] ?? config('app.name') }}</title>
+    <meta name="author" content="{{ settings()['author'] ?? '' }}">
+    <meta name="description" content="{{ settings()['description'] ?? '' }}">
+    <link rel="icon" type="image/png"
+      href="{{ settings()['favicon'] ? asset('storage/' . settings()['favicon']) : asset('images/no-image.png') }}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
   </head>
@@ -25,7 +34,7 @@
         </div>
 
         <!-- Content slot -->
-        <div class="flex-1">
+        <div class="flex-1 ">
           @yield('content')
         </div>
       </main>

@@ -19,7 +19,7 @@
     <!-- Quick Stats Grid -->
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Stat Card 1 -->
-        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-100/50 flex items-center justify-between">
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-100/50 flex items-center justify-between">
             <div class="space-y-2">
                 <span class="text-sm font-medium text-slate-400">Total Artikel</span>
                 <h3 class="text-3xl font-bold tracking-tight text-slate-900">124</h3>
