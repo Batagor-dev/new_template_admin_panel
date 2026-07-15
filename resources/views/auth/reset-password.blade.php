@@ -6,7 +6,7 @@
 @section('content')
   <div class="space-y-6">
     @if($errors->any())
-      <div class="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+      <div class="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-base text-rose-700">
         <ul class="list-disc space-y-1 pl-5">
           @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -20,27 +20,16 @@
 
       <input type="hidden" name="token" value="{{ $request->route('token') }}" />
 
-      <div>
-        <label for="email" class="mb-2 block text-sm font-medium text-slate-700">Email</label>
-        <x-ui.input id="email" name="email" type="email" value="{{ old('email', $request->email) }}" placeholder="name@example.com" required class="w-full" />
-      </div>
+      <x-ui.input id="email" name="email" type="email" value="{{ old('email', $request->email) }}" placeholder="name@example.com" required class="w-full" label="Email" />
 
-      <div>
-        <label for="password" class="mb-2 block text-sm font-medium text-slate-700">Password Baru</label>
-        <x-ui.password id="password" name="password" placeholder="Masukkan password baru" required class="w-full" />
-      </div>
+      <x-ui.password id="password" name="password" placeholder="Masukkan password baru" required class="w-full" label="Password Baru" />
 
-      <div>
-        <label for="password_confirmation" class="mb-2 block text-sm font-medium text-slate-700">Konfirmasi Password</label>
-        <x-ui.password id="password_confirmation" name="password_confirmation" placeholder="Ulangi password baru" required class="w-full" />
-      </div>
+      <x-ui.password id="password_confirmation" name="password_confirmation" placeholder="Ulangi password baru" required class="w-full" label="Konfirmasi Password" />
 
-      <div>
-        <x-ui.button type="submit" class="w-full">Reset Password</x-ui.button>
-      </div>
+      <x-ui.button type="submit" class="w-full">Reset Password</x-ui.button>
     </form>
 
-    <div class="text-center text-sm text-slate-600">
+    <div class="text-center text-base text-slate-600">
         Sudah ingat password Anda?
         <a
             href="{{ route('login') }}"

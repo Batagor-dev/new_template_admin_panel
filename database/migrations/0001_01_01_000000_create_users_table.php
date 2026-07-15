@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('email', 255)->unique();
-            $table->string("foto", 100)->default('1.png');
+            $table->string("foto", 100)->default('avatar-1.jpg');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->rememberToken();
