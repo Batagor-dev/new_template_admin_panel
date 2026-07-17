@@ -2,7 +2,7 @@
     use App\Helpers\MenuHelper;
 @endphp
 
-<aside id="admin-sidebar" class="group fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-white transition-all duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
+<aside id="admin-sidebar" class="group fixed inset-y-0 left-0 z-60 flex w-72 flex-col bg-white transition-all duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
 
   <!-- Brand Header -->
   <div class="relative flex h-20 items-center px-5 border-b border-slate-100 group-[.sidebar-collapsed]:justify-center group-[.sidebar-collapsed]:px-0 transition-all duration-300">
