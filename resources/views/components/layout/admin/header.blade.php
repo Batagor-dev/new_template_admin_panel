@@ -1,6 +1,6 @@
 @props(['sub_title' => ''])
 
-<header class="sticky top-0 z-30 flex h-20 items-center bg-white justify-between px-10 lg:px-16 xl:px-20 py-10">
+<header id="admin-header" class="sticky top-0 z-50 flex h-20 items-center bg-white justify-between px-10 lg:px-16 xl:px-20 py-10">
   <div class="flex items-center gap-4">
     <!-- Mobile Sidebar Toggle -->
     <button type="button" class="lg:hidden text-slate-500 hover:text-slate-900 transition-colors cursor-pointer" onclick="toggleSidebar()">

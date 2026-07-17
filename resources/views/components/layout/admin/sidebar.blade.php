@@ -2,19 +2,6 @@
     use App\Helpers\MenuHelper;
 @endphp
 
-<!--
-  STATE MACHINE SIDEBAR:
-  1. isPermanentCollapsed = false, isHoverPeek = false  -> Default: w-72 (Expanded)
-  2. Klik tombol collapse  -> isPermanentCollapsed = true            -> w-20 (Collapsed)
-  3. Hover sidebar (saat collapsed) -> isHoverPeek = true            -> w-72 (Expand sementara, overlay, konten TIDAK ikut geser)
-  4. Mouse keluar (masih collapsed permanent) -> isHoverPeek = false -> w-20 lagi
-  5. Klik tombol saat hover-peek -> isPermanentCollapsed = false     -> w-72 permanen (konten ikut geser)
-
-  Tombol toggle posisinya animasi: kanan (saat expanded permanen) <-> kiri (saat collapsed / hover-peek)
-  Icon tombol juga ikut fade seperti teks menu: hilang total di w-20 (collapsed murni),
-  muncul lagi (posisi kiri) saat hover-peek, lalu geser ke kanan begitu diklik jadi permanen.
--->
-
 <aside id="admin-sidebar" class="group fixed inset-y-0 left-0 z-40 flex w-72 flex-col bg-white transition-all duration-300 ease-in-out lg:translate-x-0 -translate-x-full">
 
   <!-- Brand Header -->
@@ -24,7 +11,6 @@
       <span class="text-2xl font-satoshi-bold tracking-tight text-slate-900 transition-all duration-300 group-[.sidebar-collapsed]:w-0 group-[.sidebar-collapsed]:opacity-0 truncate">Techarea</span>
     </a>
 
-    <!-- SATU tombol toggle, posisinya digeser (bukan disembunyikan/ganti elemen) -->
     <button
       type="button"
       id="sidebar-toggle-btn"
