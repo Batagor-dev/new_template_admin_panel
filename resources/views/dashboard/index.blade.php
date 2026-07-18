@@ -1,11 +1,16 @@
+@php
+    // Mengambil seluruh jejak halaman (array of objects)
+    $breadcrumbsData = Breadcrumbs::generate(); 
+    $sub_title = ($breadcrumb = Breadcrumbs::current()) ? $breadcrumb->title : 'Dashboard';
+@endphp
+
 @extends('layouts.backend.main')
 
 @section('title', 'Dashboard')
-
-@section('sub_title', 'Dashboard')
+@section('sub_title', $sub_title)
 
 @section('breadcrumb')
-    <x-layout.admin.breadcrumb :items="[]" />
+    <x-layout.admin.breadcrumb :breadcrumbs="$breadcrumbsData" />
 @endsection
 
 @section('content')
