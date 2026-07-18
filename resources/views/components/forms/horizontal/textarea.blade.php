@@ -1,9 +1,9 @@
 @props([
-    'type' => 'text', 
     'value' => '', 
     'placeholder' => '',
     'name' => '',
-    'label' => ''
+    'label' => '',
+    'rows' => '4'
 ])
 
 @php
@@ -19,29 +19,27 @@
     $inputId = $attributes->get('id', $name);
 @endphp
 
-<div class="mb-4 grid grid-cols-12 items-center gap-4">
+<div class="mb-4 grid grid-cols-12 items-start gap-4">
     @if($label)
-        <!-- Ganti col-sm-3 menjadi col-span-3 (atau md:col-span-3 agar responsif) -->
+        <!-- Menggunakan items-start (bukan items-center) agar teks label tetap di atas saat textarea meninggi -->
         <label
             for="{{ $inputId }}"
-            class="col-span-4 md:col-span-2 flex items-center font-satoshi-medium text-slate-700"
+            class="col-span-4 md:col-span-2 flex items-start pt-3 font-satoshi-medium text-slate-700"
         >
             {{ $label }}
         </label>
     @endif
 
-    <!-- Ganti col-sm-9 / col-sm-12 menjadi col-span-9 / col-span-12 -->
     <div class="{{ $label ? 'col-span-8 md:col-span-10' : 'col-span-12' }}">
-        <input
+        <textarea
             {{ $attributes->merge([
                 'id' => $inputId,
-                'type' => $type,
-                'value' => $value,
-                'placeholder' => $placeholder,
                 'name' => $name,
-                'class' => 'block w-full rounded-xl border px-4 py-3 text-base font-satoshi-medium outline-none transition focus:bg-white focus:ring-2 '.$statusClasses
+                'rows' => $rows,
+                'placeholder' => $placeholder,
+                'class' => 'block w-full rounded-xl border px-4 py-3 text-base font-satoshi-medium outline-none transition resize-y focus:bg-white focus:ring-2 '.$statusClasses
             ]) }}
-        />
+        >{{ $value }}</textarea>
 
         @if($hasError)
             <span class="mt-1.5 block text-sm text-red-600">
