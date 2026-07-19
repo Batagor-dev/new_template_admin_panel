@@ -22,26 +22,26 @@ class ArticleCategoryDataTable extends DataTable
 
                 if (auth()->user()->can('Article Category Update')) {
                     $edit = '<a href="'.route('article_categories.edit', $row->slug).'"
-                                class="btn btn-sm btn-text-secondary rounded-pill btn-icon"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors font-satoshi-medium"
                                 data-bs-toggle="tooltip" title="Edit">
-                                <i class="ri ri-edit-line icon-20px"></i>
+                                <i class="ri ri-edit-line text-lg"></i>
                              </a>';
                 }
 
                 if (auth()->user()->can('Article Category Delete')) {
                     $delete = '
                         <form action="'.route('article_categories.destroy', $row->slug).'"
-                              method="POST" style="display:inline-block;" class="delete-form">
+                              method="POST" style="display:inline-block;" class="delete-form m-0">
                             '.csrf_field().method_field('DELETE').'
-                            <button type="button" class="btn btn-sm btn-text-secondary rounded-pill btn-icon delete-btn"
+                            <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors delete-btn font-satoshi-medium"
                                 data-id="'.$row->slug.'"
                                 data-bs-toggle="tooltip" title="Delete">
-                                <i class="ri ri-delete-bin-line icon-20px"></i>
+                                <i class="ri ri-delete-bin-line text-lg"></i>
                             </button>
                         </form>';
                 }
 
-                return $edit.' '.$delete;
+                return '<div class="flex items-center space-x-2 justify-center">' . $edit.' '.$delete . '</div>';
             })
             ->rawColumns(['action']);
     }
@@ -65,23 +65,17 @@ class ArticleCategoryDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1) // sort by name
             ->responsive(true)
-            ->addTableClass('table table-bordered table-hover align-middle bg-white')
+            ->addTableClass('min-w-full divide-y divide-slate-200 overflow-hidden bg-white text-sm font-satoshi-medium text-slate-700')
             ->parameters([
-                'dom' => '<"row mb-3"
-                              <"col-md-6 d-flex align-items-center"l>
-                              <"col-md-6 d-flex justify-content-end"f>
-                           >
-                           <"table-responsive"tr>
-                           <"row mt-3"
-                              <"col-md-6"i>
-                              <"col-md-6 d-flex justify-content-end"p>
-                           >',
+                'dom' => '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 font-satoshi-medium"lf>' .
+                         '<"overflow-x-auto w-full"tr>' .
+                         '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4 font-satoshi-medium text-slate-500 text-sm"ip>',
                 'language' => [
-                    'search'        => 'Search',
+                    'search' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Search:</span>',
                     'searchPlaceholder' => 'Search category...',
-                    'lengthMenu'    => '_MENU_ Entries',
-                    'info'          => 'Showing _START_ to _END_ of _TOTAL_ entries',
-                    'paginate'      => [
+                    'lengthMenu' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Show</span> _MENU_ <span class="text-slate-600 ml-2 font-satoshi-medium">Entries</span>',
+                    'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    'paginate' => [
                         'first' => '<i class="ri-arrow-left-double-line text-lg"></i>',
                         'previous' => '<i class="ri-arrow-left-s-line text-lg"></i>',
                         'next' => '<i class="ri-arrow-right-s-line text-lg"></i>',
@@ -97,13 +91,14 @@ class ArticleCategoryDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
-            Column::make('name')->title('Category Name'),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(40)->addClass('text-center px-4 py-3 bg-slate-50 font-satoshi-medium text-slate-500 border-b border-slate-200'),
+            Column::make('name')->title('Category Name')->addClass('px-4 py-3 border-b border-slate-200 text-slate-900 font-semibold'),
             Column::computed('action')
                 ->title('Action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(120),
+                ->width(120)
+                ->addClass('text-center px-4 py-3 border-b border-slate-200'),
         ];
     }
 

@@ -84,8 +84,7 @@ class ArticleCategoryController extends Controller
      */
     public function destroy(ArticleCategory $articleCategory)
     {
-        ArticleCategory::find($articleCategory->id)
-            ->update(['status' => FALSE]);
+        $articleCategory->update(['status' => '0']);
 
         return redirect('/article_categories')->with('success', 'Category has been Deleted!');
     }
