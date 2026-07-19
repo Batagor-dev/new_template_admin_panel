@@ -107,8 +107,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        Role::find($role->uuid)
-            ->update($request->all());
+        $role->update($request->validated());
 
         return redirect('/role')->with('success', 'Role has been updated!');
     }

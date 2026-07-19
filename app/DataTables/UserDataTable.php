@@ -88,7 +88,7 @@ class UserDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(40)->addClass('text-center px-4 py-3 bg-slate-50 font-satoshi-medium text-slate-500 border-b border-slate-200'),
             Column::make('foto')->title('Foto')->orderable(false)->searchable(false)->width(70)->addClass('text-center px-4 py-3 border-b border-slate-200'),
-            Column::make('username')->title('Username')->addClass('px-4 py-3 border-b border-slate-200 text-slate-900 font-semibold'),
+            Column::make('username')->title('Username')->addClass('px-4 py-3 border-b border-slate-200 text-slate-900 font-satoshi-medium'),
             Column::make('name')->title('Name')->addClass('px-4 py-3 border-b border-slate-200'),
             Column::make('email')->title('Email')->addClass('px-4 py-3 border-b border-slate-200 text-slate-500'),
             Column::computed('action')->title('Action')->exportable(false)->printable(false)->width(120)->addClass('text-center px-4 py-3 border-b border-slate-200'),
