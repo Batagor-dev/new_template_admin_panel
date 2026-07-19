@@ -75,8 +75,10 @@ class UserDataTable extends DataTable
                     'lengthMenu' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Show</span> _MENU_ <span class="text-slate-600 ml-2 font-satoshi-medium">entries</span>',
                     'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
                     'paginate' => [
+                        'first' => '<i class="ri-arrow-left-double-line text-lg"></i>',
                         'previous' => '<i class="ri-arrow-left-s-line text-lg"></i>',
-                        'next' => '<i class="ri-arrow-right-s-line text-lg"></i>'
+                        'next' => '<i class="ri-arrow-right-s-line text-lg"></i>',
+                        'last' => '<i class="ri-arrow-right-double-line text-lg"></i>'
                     ],
                 ],
             ]);

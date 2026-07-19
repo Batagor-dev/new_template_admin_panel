@@ -75,8 +75,10 @@ class MenuDataTable extends DataTable
                     'lengthMenu'    => '_MENU_ Entries',
                     'info'          => 'Showing _START_ to _END_ of _TOTAL_ entries',
                     'paginate'      => [
-                        'previous' => '<i class="ri-arrow-left-s-line"></i>',
-                        'next'     => '<i class="ri-arrow-right-s-line"></i>'
+                        'first' => '<i class="ri-arrow-left-double-line text-lg"></i>',
+                        'previous' => '<i class="ri-arrow-left-s-line text-lg"></i>',
+                        'next' => '<i class="ri-arrow-right-s-line text-lg"></i>',
+                        'last' => '<i class="ri-arrow-right-double-line text-lg"></i>'
                     ],
                 ],
             ]);

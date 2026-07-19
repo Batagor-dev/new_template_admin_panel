@@ -14,37 +14,36 @@
     --font-satoshi: "Satoshi", sans-serif;
 }
 
-/* Utility */
-.font-satoshi {
+@utility font-satoshi {
     font-family: "Satoshi", sans-serif;
 }
 
-.font-satoshi-light {
+@utility font-satoshi-light {
     font-family: "Satoshi", sans-serif;
     font-weight: 300;
 }
 
-.font-satoshi-regular {
+@utility font-satoshi-regular {
     font-family: "Satoshi", sans-serif;
     font-weight: 400;
 }
 
-.font-satoshi-medium {
+@utility font-satoshi-medium {
     font-family: "Satoshi", sans-serif;
     font-weight: 500;
 }
 
-.font-satoshi-semibold {
+@utility font-satoshi-semibold {
     font-family: "Satoshi", sans-serif;
     font-weight: 600;
 }
 
-.font-satoshi-bold {
+@utility font-satoshi-bold {
     font-family: "Satoshi", sans-serif;
     font-weight: 700;
 }
 
-.font-satoshi-black {
+@utility font-satoshi-black {
     font-family: "Satoshi", sans-serif;
     font-weight: 900;
 }
