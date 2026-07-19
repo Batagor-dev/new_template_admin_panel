@@ -70,8 +70,7 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        Permission::find($permission->uuid)
-            ->update($request->all());
+        $permission->update($request->validated());
 
         return redirect('/permission')->with('success', 'Permission has been updated!');
     }

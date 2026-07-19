@@ -69,8 +69,7 @@ class PermissionGroupController extends Controller
      */
     public function update(UpdatePermissionGroupRequest $request, PermissionGroup $permissiongroup)
     {
-        PermissionGroup::find($permissiongroup->uuid)
-            ->update($request->all());
+        $permissiongroup->update($request->validated());
 
         return redirect('/permissiongroup')->with('success', 'Permission Group has been updated!');
     }
