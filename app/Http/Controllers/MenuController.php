@@ -71,7 +71,7 @@ class MenuController extends Controller
      */
     public function update(UpdateMenuRequest $request, Menu $menu)
     {
-        Menu::where('uuid', $menu->uuid)->firstOrFail()->update($request->all());
+        $menu->update($request->all());
 
         return redirect('/menu')->with('success', 'Menu has been updated!');
     }

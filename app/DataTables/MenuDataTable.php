@@ -18,23 +18,27 @@ class MenuDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('parent', fn($menu) => $menu->parent?->nama_menu ?? '-')
             ->addColumn('permission_group', fn($menu) => $menu->permissionGroup?->name ?? '-')
-            ->addColumn('icon', fn($menu) => $menu->icon ? '<i class="'.$menu->icon.'"></i>' : '-')
-            ->addColumn('status', fn($menu) => $menu->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-secondary">Off</span>')
+            ->addColumn('icon', fn($menu) => $menu->icon ? '<i class="'.$menu->icon.' text-lg"></i>' : '-')
+            ->addColumn('status', fn($menu) => $menu->status 
+                ? '<span class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-satoshi-semibold select-none bg-emerald-100 text-emerald-700">Active</span>' 
+                : '<span class="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-satoshi-semibold select-none bg-slate-100 text-slate-600">Off</span>')
             ->addColumn('action', function ($row) {
-                $edit = '<a href="'.route('menu.edit', $row->uuid).'" class="btn btn-sm btn-text-secondary rounded-pill btn-icon" data-bs-toggle="tooltip" title="Edit">
-                            <i class="ri ri-edit-line icon-20px"></i></a>';
+                $edit = '<a href="'.route('menu.edit', $row->uuid).'" 
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors font-satoshi-medium"
+                        data-bs-toggle="tooltip" title="Edit">
+                        <i class="ri ri-edit-line text-lg"></i></a>';
 
                 $delete = '
-                            <form action="'.route('menu.destroy', $row->uuid).'" method="POST" style="display:inline-block;" class="delete-form">
+                            <form action="'.route('menu.destroy', $row->uuid).'" method="POST" style="display:inline-block;" class="delete-form m-0">
                                 '.csrf_field().method_field('DELETE').'
-                                <button type="button" class="btn btn-sm btn-text-secondary rounded-pill btn-icon delete-btn"
+                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors delete-btn font-satoshi-medium"
                                     data-id="'.$row->uuid.'"
                                     data-bs-toggle="tooltip" title="Delete">
-                                    <i class="ri ri-delete-bin-line icon-20px"></i>
+                                    <i class="ri ri-delete-bin-line text-lg"></i>
                                 </button>
                             </form>';
 
-                return $edit.' '.$delete;
+                return '<div class="flex items-center space-x-2 justify-center">' . $edit.' '.$delete . '</div>';
             })
             ->rawColumns(['icon', 'status', 'action']);
     }
@@ -58,23 +62,17 @@ class MenuDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(5) // sort by 'sort' column
             ->responsive(true)
-            ->addTableClass('table table-bordered table-hover align-middle bg-white')
+            ->addTableClass('min-w-full divide-y divide-slate-200 overflow-hidden bg-white text-sm font-satoshi-medium text-slate-700')
             ->parameters([
-                'dom' => '<"row mb-3"
-                              <"col-md-6 d-flex align-items-center"l>
-                              <"col-md-6 d-flex justify-content-end"f>
-                           >
-                           <"table-responsive"tr>
-                           <"row mt-3"
-                              <"col-md-6"i>
-                              <"col-md-6 d-flex justify-content-end"p>
-                           >',
+                'dom' => '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 font-satoshi-medium"lf>' .
+                         '<"overflow-x-auto w-full"tr>' .
+                         '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4 font-satoshi-medium text-slate-500 text-sm"ip>',
                 'language' => [
-                    'search'        => 'Search',
+                    'search' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Search:</span>',
                     'searchPlaceholder' => 'Search menu...',
-                    'lengthMenu'    => '_MENU_ Entries',
-                    'info'          => 'Showing _START_ to _END_ of _TOTAL_ entries',
-                    'paginate'      => [
+                    'lengthMenu' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Show</span> _MENU_ <span class="text-slate-600 ml-2 font-satoshi-medium">Entries</span>',
+                    'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    'paginate' => [
                         'first' => '<i class="ri-arrow-left-double-line text-lg"></i>',
                         'previous' => '<i class="ri-arrow-left-s-line text-lg"></i>',
                         'next' => '<i class="ri-arrow-right-s-line text-lg"></i>',
@@ -90,19 +88,20 @@ class MenuDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
-            Column::make('nama_menu')->title('Menu Name'),
-            Column::make('parent')->title('Parent')->orderable(false),
-            Column::make('icon')->title('Icon')->orderable(false),
-            Column::make('href')->title('Link'),
-            Column::make('sort')->title('Order'),
-            Column::make('permission_group')->title('Permission Group')->orderable(false),
-            Column::make('status')->title('Status')->orderable(false),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(40)->addClass('text-center px-4 py-3 bg-slate-50 font-satoshi-medium text-slate-500 border-b border-slate-200'),
+            Column::make('nama_menu')->title('Menu Name')->addClass('px-4 py-3 border-b border-slate-200 text-slate-900 font-semibold'),
+            Column::make('parent')->title('Parent')->orderable(false)->addClass('px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::make('icon')->title('Icon')->orderable(false)->addClass('text-center px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::make('href')->title('Link')->addClass('px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::make('sort')->title('Order')->addClass('text-center px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::make('permission_group')->title('Permission Group')->orderable(false)->addClass('px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::make('status')->title('Status')->orderable(false)->addClass('text-center px-4 py-3 border-b border-slate-200'),
             Column::computed('action')
                 ->title('Action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(120),
+                ->width(120)
+                ->addClass('text-center px-4 py-3 border-b border-slate-200'),
         ];
     }
 
