@@ -16,7 +16,7 @@ class UserDataTable extends DataTable
             ->addColumn('foto', function ($row) {
                 $src = str_starts_with($row->foto, 'avatar-')
                     ? asset('assets/img/avatar/' . $row->foto)
-                    : asset('storage/uploads/avatars/' . $row->foto);
+                    : asset('storage/uploads/users/' . $row->foto);
 
                 // Mengubah kelas Bootstrap rounded-circle ke Tailwind rounded-full
                 return '<img src="'.$src.'" class="w-10 h-10 rounded-full object-cover mx-auto">';

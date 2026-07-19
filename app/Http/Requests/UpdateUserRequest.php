@@ -50,7 +50,7 @@ class UpdateUserRequest extends FormRequest
                 'max:2048',
             ],
             'password' => [
-                'required',
+                'nullable',
                 'string',
                 'min:8',
                 'confirmed',

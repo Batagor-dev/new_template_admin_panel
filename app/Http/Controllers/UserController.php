@@ -10,6 +10,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\DataTables\UserDataTable;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -47,11 +48,15 @@ class UserController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('foto')) {
+            // Generate nama file unik agar tidak bertabrakan
             $fileName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('uploads/users'), $fileName);
+            
+            // Menyimpan file ke storage/app/public/uploads/users
+            $request->file('foto')->storeAs('uploads/users', $fileName, 'public');
+            
             $data['foto'] = $fileName;
         } else {
-            $data['foto'] = 'no_image.jpg';
+            $data['foto'] = 'avatar-1.jpg';
         }
 
         $data['password'] = Hash::make($data['password']);
@@ -90,28 +95,32 @@ class UserController extends Controller
 
         // Handle foto baru
         if ($request->hasFile('foto')) {
-            // Hapus foto lama kalau ada
-            if ($user->foto && Storage::disk('public')->exists($user->foto)) {
-                Storage::disk('public')->delete($user->foto);
+            if ($user->foto && $user->foto !== 'avatar-1.jpg') {
+                $oldFilePath = 'uploads/users/' . $user->foto;
+                if (Storage::disk('public')->exists($oldFilePath)) {
+                    Storage::disk('public')->delete($oldFilePath);
+                }
             }
 
-            // Simpan foto baru
-            $validatedData['foto'] = $request->file('foto')->store('user_photos', 'public');
+            // Generate nama file unik agar tidak bertabrakan
+            $fileName = time() . '.' . $request->foto->extension();
+            
+            // Menyimpan file ke storage/app/public/uploads/users
+            $request->file('foto')->storeAs('uploads/users', $fileName, 'public');
+            
+            $validatedData['foto'] = $fileName;
         }
 
-        // Handle password (jangan overwrite kalau kosong)
         if ($request->filled('password')) {
             $validatedData['password'] = bcrypt($request->password);
         } else {
             unset($validatedData['password']);
         }
 
-        // Update user dengan data valid
         $user->update($validatedData);
 
         return redirect('/user')->with('success', 'User has been updated!');
     }
-
 
     public function role(User $user)
     {
