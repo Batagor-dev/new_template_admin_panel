@@ -73,3 +73,17 @@
     transition: width 200ms ease, opacity 200ms linear;
     opacity: 1;
 }
+
+/* --- Global Spinner Animasi untuk Tombol/Loading --- */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
