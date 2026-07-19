@@ -42,26 +42,22 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         <!-- Keyword (Tagify) -->
-                        <div>
-                            <label for="keyword" class="mb-2 block text-base font-satoshi-medium text-slate-700">Keyword</label>
-                            <input id="keyword"
-                                   class="block w-full font-satoshi-medium rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base outline-none transition focus:bg-white focus:ring-2 focus:ring-slate-200 @error('keyword') border-red-400 bg-red-50/50 text-red-900 @enderror"
-                                   name="keyword"
-                                   value="{{ old('keyword', $keyword ?? '') }}">
-                            @error('keyword')
-                                <span class="mt-1.5 block text-sm font-medium text-red-600">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-ui.tagify 
+                            name="keyword" 
+                            label="Keyword" 
+                            placeholder="Add site keywords..." 
+                            value="{{ old('keyword', $keyword ?? '') }}"
+                        />
 
                         <!-- Favicon -->
                         <div>
                             <label class="mb-2 block text-base font-satoshi-medium text-slate-700">Favicon</label>
                             <div class="flex items-center gap-4">
                                 <div class="flex-1">
-                                    <input type="file"
-                                           name="favicon"
-                                           class="block w-full font-satoshi-medium text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer @error('favicon') is-invalid @enderror"
-                                           onchange="previewImage(this)">
+                                    <x-ui.file
+                                        name="favicon"
+                                        onchange="previewImage(this)"
+                                    />
                                 </div>
                                 <div class="h-12 w-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-1 shrink-0 overflow-hidden">
                                     <img id="prev"
@@ -70,9 +66,6 @@
                                          alt="favicon">
                                 </div>
                             </div>
-                            @error('favicon')
-                                <span class="mt-1.5 block text-sm font-medium text-red-600">{{ $message }}</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -108,12 +101,6 @@
 
 @push('scripts')
 <script>
-    /* ---------- Tagify keyword ---------- */
-    const keywordInput = document.querySelector('#keyword');
-    const tagify = new Tagify(keywordInput, {
-        originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-    });
-
     /* ---------- Preview favicon ---------- */
     function previewImage(input){
         const prev = document.getElementById('prev');

@@ -55,20 +55,10 @@
                         required
                     />
 
-                    <div>
-                        <label for="foto" class="mb-2 block text-base font-satoshi-medium text-slate-700">Foto</label>
-                        <input 
-                            type="file" 
-                            name="foto" 
-                            id="foto" 
-                            class="block w-full font-satoshi-medium text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer"
-                        />
-                        @error('foto')
-                            <span class="mt-1.5 block text-sm font-medium text-red-600">
-                                {{ $message }}
-                            </span>
-                        @enderror
-                    </div>
+                    <x-ui.file
+                        name="foto"
+                        label="Foto"
+                    />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
