@@ -34,9 +34,7 @@
         <a href="{{ route('password.request') ?? '#' }}" class="font-satoshi-medium text-base text-slate-700 hover:text-slate-900">Lupa password?</a>
       </div>
 
-      <div>
-        <x-ui.button type="submit" class="w-full">Masuk</x-ui.button>
-      </div>
+      <x-ui.button type="submit" font="bold" size="md" class="w-full">Masuk</x-ui.button>
     </form>
 
     <div class="space-y-4">

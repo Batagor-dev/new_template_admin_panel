@@ -31,7 +31,7 @@
   {{-- Action button --}}
   <form method="POST" action="{{ route('verification.send') }}">
     @csrf
-    <x-ui.button type="submit" class="w-full flex items-center justify-center gap-2">
+    <x-ui.button type="submit" font="bold" size="md" class="w-full flex items-center justify-center gap-2">
       <i class="ri-refresh-line text-base"></i>
       Kirim Ulang Email
     </x-ui.button>

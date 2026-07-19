@@ -26,14 +26,14 @@
       </div>
 
       <div>
-        <x-ui.button type="submit" class="w-full">Verifikasi OTP</x-ui.button>
+        <x-ui.button type="submit" font="bold" size="md" class="w-full">Verifikasi OTP</x-ui.button>
       </div>
     </form>
 
     <form method="POST" action="{{ route('verification.otp.resend') }}" class="space-y-4">
       @csrf
       <div>
-        <x-ui.button type="submit" class="w-full bg-slate-100 text-slate-900 hover:bg-slate-200">Kirim Ulang OTP</x-ui.button>
+        <x-ui.button type="submit" font="bold" size="md" class="w-full bg-slate-100 text-slate-900 hover:bg-slate-200">Kirim Ulang OTP</x-ui.button>
       </div>
     </form>
   </div>

@@ -1,6 +1,7 @@
 @props([
     'type' => 'button',
     'size' => 'md',
+    'font' => 'medium',
     'href' => null
 ])
 
@@ -12,11 +13,18 @@
         'lg' => 'px-6 py-4 text-lg rounded-2xl',
     ];
 
+    $fonts = [
+        'medium' => 'font-satoshi-medium',
+        'semibold' => 'font-satoshi-semibold',
+        'bold' => 'font-satoshi-bold',
+    ];
+
     // Ambil kelas ukuran yang dipilih, default ke 'md' jika tidak ditemukan
     $sizeClass = $sizes[$size] ?? $sizes['md'];
+    $fontClass = $fonts[$font] ?? $fonts['medium'];
 
     // Gabungkan kelas dasar dengan kelas ukuran khusus
-    $baseClasses = "inline-flex items-center justify-center bg-slate-900 font-satoshi-medium text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 " . $sizeClass;
+    $baseClasses = "inline-flex items-center justify-center bg-slate-900 text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 " . $sizeClass . " " . $fontClass;
 @endphp
 
 @if ($href)

@@ -45,7 +45,7 @@
         required 
       />
 
-      <x-ui.button type="submit" class="w-full">Daftar</x-ui.button>
+      <x-ui.button type="submit" font="bold" size="md" class="w-full">Daftar</x-ui.button>
     </form>
 
     <div class="space-y-4">

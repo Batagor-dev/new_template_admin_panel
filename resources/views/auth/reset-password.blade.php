@@ -26,7 +26,7 @@
 
       <x-ui.password id="password_confirmation" name="password_confirmation" placeholder="Ulangi password baru" required class="w-full" label="Konfirmasi Password" />
 
-      <x-ui.button type="submit" class="w-full">Reset Password</x-ui.button>
+      <x-ui.button type="submit" font="bold" size="md" class="w-full">Reset Password</x-ui.button>
     </form>
 
     <div class="text-center text-base text-slate-600">
