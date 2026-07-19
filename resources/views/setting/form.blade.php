@@ -1,0 +1,139 @@
+@php
+    $sub_title = ($breadcrumb = Breadcrumbs::current()) ? $breadcrumb->title : 'Dashboard';
+    $breadcrumbsData = Breadcrumbs::generate(Request::route()->getName());
+@endphp
+
+@extends('layouts.backend.main')
+
+@section('title', 'System Settings')
+@section('sub_title', $sub_title)
+
+@section('breadcrumb')
+    <x-layout.admin.breadcrumb :breadcrumbs="$breadcrumbsData" />
+@endsection
+
+@section('content')
+    <div class="space-y-6">
+        <x-ui.card>
+            <form method="POST" action="{{ $action }}" class="space-y-6" enctype="multipart/form-data">
+                @csrf
+                
+                <div>
+                    <h5 class="text-lg font-satoshi-bold text-slate-900 mb-4">{{ $sub_title }}</h5>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Title -->
+                        <x-ui.input 
+                            name="title" 
+                            label="Title" 
+                            placeholder="Site title" 
+                            value="{{ old('title', $title ?? '') }}"
+                            required
+                        />
+
+                        <!-- Author -->
+                        <x-ui.input 
+                            name="author" 
+                            label="Author" 
+                            placeholder="Author name" 
+                            value="{{ old('author', $author ?? '') }}"
+                        />
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <!-- Keyword (Tagify) -->
+                        <div>
+                            <label for="keyword" class="mb-2 block text-base font-satoshi-medium text-slate-700">Keyword</label>
+                            <input id="keyword"
+                                   class="block w-full font-satoshi-medium rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base outline-none transition focus:bg-white focus:ring-2 focus:ring-slate-200 @error('keyword') border-red-400 bg-red-50/50 text-red-900 @enderror"
+                                   name="keyword"
+                                   value="{{ old('keyword', $keyword ?? '') }}">
+                            @error('keyword')
+                                <span class="mt-1.5 block text-sm font-medium text-red-600">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Favicon -->
+                        <div>
+                            <label class="mb-2 block text-base font-satoshi-medium text-slate-700">Favicon</label>
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1">
+                                    <input type="file"
+                                           name="favicon"
+                                           class="block w-full font-satoshi-medium text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer @error('favicon') is-invalid @enderror"
+                                           onchange="previewImage(this)">
+                                </div>
+                                <div class="h-12 w-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-1 shrink-0 overflow-hidden">
+                                    <img id="prev"
+                                         class="h-full w-full object-contain"
+                                         src="{{ isset($favicon) ? asset('storage/'.$favicon) : asset('images/no-image.png') }}"
+                                         alt="favicon">
+                                </div>
+                            </div>
+                            @error('favicon')
+                                <span class="mt-1.5 block text-sm font-medium text-red-600">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mt-6">
+                        <label for="description" class="mb-2 block text-base font-satoshi-medium text-slate-700">Description</label>
+                        <textarea class="block w-full font-satoshi-medium rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-base outline-none transition focus:bg-white focus:ring-2 focus:ring-slate-200 @error('description') border-red-400 bg-red-50/50 text-red-900 @enderror"
+                                  id="description"
+                                  name="description"
+                                  placeholder="Description"
+                                  rows="4"
+                                  maxlength="160">{{ old('description', $description ?? '') }}</textarea>
+                        <div class="mt-1.5 flex justify-between items-center text-xs text-slate-400 font-satoshi">
+                            <span>Sisa karakter: <span id="count" class="font-satoshi-bold text-slate-500">160</span></span>
+                            <span>Maksimal 160 karakter</span>
+                        </div>
+                        @error('description')
+                            <span class="mt-1.5 block text-sm font-medium text-red-600">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="pt-6 border-t border-slate-100 flex items-center justify-end">
+                    <x-ui.button type="submit" font="bold" size="sm">
+                        Save Settings
+                    </x-ui.button>
+                </div>
+            </form>
+        </x-ui.card>
+    </div>
+@endsection
+
+@push('scripts')
+<script>
+    /* ---------- Tagify keyword ---------- */
+    const keywordInput = document.querySelector('#keyword');
+    const tagify = new Tagify(keywordInput, {
+        originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+    });
+
+    /* ---------- Preview favicon ---------- */
+    function previewImage(input){
+        const prev = document.getElementById('prev');
+        if(input.files && input.files[0]){
+            const r = new FileReader();
+            r.onload = e => prev.src = e.target.result;
+            r.readAsDataURL(input.files[0]);
+        }
+    }
+
+    /* ---------- Description counter ------ */
+    const desc = document.getElementById('description');
+    const cnt  = document.getElementById('count');
+    const max  = 160;
+
+    function setCount() {
+        const remaining = max - desc.value.length;
+        cnt.textContent = remaining > 0 ? remaining : 0;
+    }
+    setCount();
+    desc.addEventListener('input', setCount);
+</script>
+@endpush
