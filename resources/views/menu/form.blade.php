@@ -58,7 +58,7 @@
                                 value="{{ old('icon', $menu_data->icon ?? '') }}"
                             />
                             <p class="mt-1 text-sm text-slate-400 font-satoshi-medium">
-                                Refer to <a href="https://remixicon.com" target="_blank" class="text-black underline font-semibold">RemixIcon</a>
+                                Refer to <a href="https://remixicon.com" target="_blank" class="text-black underline font-satoshi-medium">RemixIcon</a>
                             </p>
                         </div>
 
