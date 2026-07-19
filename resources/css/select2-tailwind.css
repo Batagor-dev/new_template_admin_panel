@@ -1,0 +1,89 @@
+/* resources/css/select2-tailwind.css */
+
+/* Hide default borders and make it look like the Alpine select2 */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    @apply flex min-h-[50px] w-full items-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2 text-base font-satoshi-medium text-slate-900 outline-none transition focus-within:border-slate-400 focus-within:ring-2 focus-within:ring-slate-200;
+}
+
+/* Remove default focus outline on select2 */
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: none;
+    @apply border border-slate-400 ring-2 ring-slate-200;
+}
+.select2-container--default.select2-container--focus .select2-selection--single {
+    @apply border border-slate-400 ring-2 ring-slate-200;
+}
+
+/* Single Selection Text */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    @apply px-0 text-slate-900 font-satoshi-medium leading-normal w-full;
+}
+
+/* Arrow position */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    @apply h-full right-4;
+}
+
+/* Placeholder */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    @apply text-slate-400 font-satoshi;
+}
+
+/* Multiple Selection Container tweaks */
+.select2-container--default .select2-selection--multiple {
+    @apply py-1.5; /* slightly smaller padding to account for tags */
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    @apply flex flex-wrap gap-1.5 items-center w-full p-0 m-0;
+}
+
+/* Multiple Selection Tags (Badges) */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    @apply flex items-center gap-1 flex-row-reverse bg-slate-200/70 text-slate-800 text-sm px-2 py-0.5 rounded-lg border-0 m-0;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+    @apply px-0 font-satoshi-medium;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    @apply text-slate-400 hover:text-slate-600 font-bold ml-1 text-base border-0 hover:bg-transparent bg-transparent p-0 flex items-center justify-center;
+}
+
+/* Search input inside multiple */
+.select2-container--default .select2-selection--multiple .select2-search.select2-search--inline .select2-search__field {
+    @apply mt-0 mb-0 font-satoshi-medium text-slate-900 placeholder:text-slate-400 h-full;
+}
+
+/* Dropdown Container */
+.select2-dropdown {
+    @apply mt-2 border border-slate-200 rounded-2xl shadow-lg bg-white overflow-hidden p-2 z-50;
+}
+
+/* Dropdown Search Box */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    @apply w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-slate-400 focus:bg-white transition;
+}
+
+/* Dropdown Options List */
+.select2-results__options {
+    @apply space-y-0.5;
+}
+.select2-container--default .select2-results__option {
+    @apply px-3 py-2 text-sm rounded-lg cursor-pointer transition flex items-center justify-between text-slate-700 mt-0.5;
+}
+
+/* Hover/Highlight Option */
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable,
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    @apply bg-slate-50 text-slate-900;
+}
+
+/* Selected Option */
+.select2-container--default .select2-results__option[aria-selected="true"] {
+    @apply bg-indigo-50 text-indigo-700 font-satoshi-medium;
+}
+
+/* Remove default Select2 clear button to use our own or none */
+.select2-selection__clear {
+    @apply hidden;
+}

@@ -62,6 +62,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.addEventListener("resize", setInitialHeight);
     });
+
+    // Initialize Select2 natively if available
+    if (typeof jQuery !== 'undefined' && $.fn.select2) {
+        $('.select2').each(function() {
+            $(this).select2({
+                width: '100%',
+                placeholder: $(this).data('placeholder') || 'Pilih opsi...',
+                allowClear: $(this).data('allow-clear') || false
+            });
+        });
+    }
 });
 
 // --- Custom Page Loader & Progress Bar (NProgress style) ---

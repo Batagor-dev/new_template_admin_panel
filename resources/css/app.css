@@ -55,6 +55,7 @@
 @source "../**/*.js";
 
 @import "./datatable.css";
+@import "./select2-tailwind.css";
 
 /* --- Custom Page Loader & Progress Bar (NProgress style) --- */
 #nprogress {

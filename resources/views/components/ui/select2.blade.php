@@ -3,15 +3,15 @@
     'label' => '',
     'placeholder' => 'Pilih opsi...',
     'multiple' => false,
-    'options' => [], // Menerima koleksi/array riil dari Laravel
-    'value' => null  // Menerima nilai default (misal: old value atau data edit)
+    'options' => [],
+    'value' => null
 ])
 
 @php
     $hasError = $name && $errors->has($name);
     $statusClasses = $hasError 
         ? 'border-red-400 bg-red-50/50 text-red-900 focus-within:border-red-500 focus-within:ring-red-100' 
-        : 'border-slate-200 bg-white text-slate-900 focus-within:border-slate-400 focus-within:ring-slate-200';
+        : 'border-slate-200 bg-slate-50 text-slate-900 focus-within:border-slate-400 focus-within:ring-slate-200';
     
     $inputId = $attributes->get('id', $name);
 
@@ -31,7 +31,7 @@
     }
 @endphp
 
-<div class="mb-4 grid grid-cols-12 items-center gap-4" 
+<div class="w-full text-left" 
      x-data="select2Laravel({ 
         multiple: {{ $multiple ? 'true' : 'false' }}, 
         options: {{ json_encode($options) }},
@@ -40,17 +40,16 @@
      })">
      
     @if($label)
-        <label for="{{ $inputId }}" class="col-span-4 md:col-span-2 flex items-center font-satoshi-medium text-slate-700">
+        <label for="{{ $inputId }}" class="mb-2 block text-base font-satoshi-medium text-slate-700">
             {{ $label }}
         </label>
     @endif
 
-    <div class="{{ $label ? 'col-span-8 md:col-span-10' : 'col-span-12' }} relative">
-        
+    <div class="relative">
         <!-- Input Box / Trigger Dropdown -->
         <div @click="toggleDropdown()" 
              @click.away="closeDropdown()"
-             class="flex min-h-[50px] w-full items-center justify-between rounded-xl border px-4 py-2 text-base font-satoshi-medium cursor-pointer outline-none transition focus-within:ring-2 {{ $statusClasses }}">
+             class="flex min-h-[50px] w-full items-center justify-between rounded-2xl border px-4 py-2.5 text-base font-satoshi-medium cursor-pointer outline-none transition focus-within:ring-2 {{ $statusClasses }}">
             
             <div class="flex flex-wrap gap-1.5 items-center w-full overflow-hidden">
                 <template x-if="selected.length === 0">
@@ -66,9 +65,9 @@
                 <template x-if="multiple">
                     <div class="flex flex-wrap gap-1.5 items-center">
                         <template x-for="val in selected" :key="val">
-                            <div class="flex items-center gap-1 bg-slate-100 text-slate-800 text-sm px-2.5 py-1 rounded-lg border border-slate-200">
+                            <div class="flex items-center gap-1 bg-slate-200/70 text-slate-800 text-sm px-2 py-0.5 rounded-lg">
                                 <span x-text="getLabel(val)"></span>
-                                <button type="button" @click.stop="removeValue(val)" class="text-slate-400 hover:text-slate-600 font-bold ml-1 text-xs">&times;</button>
+                                <button type="button" @click.stop="removeValue(val)" class="text-slate-400 hover:text-slate-600 font-satoshi-medium ml-1 text-xs">&times;</button>
                             </div>
                         </template>
                     </div>
@@ -80,7 +79,7 @@
             </svg>
         </div>
 
-        <!-- Hidden input untuk disubmit ke backend Laravel -->
+        <!-- Hidden input untuk disubmit ke backend -->
         <template x-if="!multiple">
             <input type="hidden" name="{{ $name }}" :value="selected[0] || ''">
         </template>
@@ -93,14 +92,14 @@
         <!-- Dropdown Area -->
         <div x-show="isOpen" 
              x-transition
-             class="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-xl shadow-lg max-h-60 overflow-y-auto p-2" 
+             class="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-2xl shadow-lg max-h-60 overflow-y-auto p-2" 
              style="display: none;">
             
             <div class="sticky top-0 bg-white pb-2 pt-0.5">
                 <input type="text" 
                        x-model="search" 
                        placeholder="Cari..." 
-                       class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-slate-400 focus:bg-white transition"
+                       class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-slate-400 focus:bg-white transition"
                        @click.stop />
             </div>
 
@@ -108,7 +107,7 @@
                 <template x-for="opt in filteredOptions" :key="opt.value">
                     <li @click="selectValue(opt.value)"
                         class="px-3 py-2 text-sm rounded-lg cursor-pointer transition flex items-center justify-between"
-                        :class="isSelected(opt.value) ? 'bg-slate-100 text-slate-900 font-satoshi-bold' : 'text-slate-700 hover:bg-slate-50'">
+                        :class="isSelected(opt.value) ? 'bg-slate-100 text-slate-900 font-satoshi-satoshi-medium' : 'text-slate-700 hover:bg-slate-50'">
                         <span x-text="opt.label"></span>
                         
                         <template x-if="isSelected(opt.value)">
@@ -126,7 +125,7 @@
         </div>
 
         @if($hasError)
-            <span class="mt-1.5 block text-sm text-red-600">
+            <span class="mt-1.5 block text-sm font-medium text-red-600">
                 {{ $errors->first($name) }}
             </span>
         @endif
@@ -177,7 +176,6 @@
                 }));
             },
             getLabel(val) {
-                if (!val) return '';
                 const opt = this.formattedOptions.find(o => o.value === String(val));
                 return opt ? opt.label : val;
             },
