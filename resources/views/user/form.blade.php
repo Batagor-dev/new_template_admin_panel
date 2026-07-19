@@ -4,9 +4,18 @@
     if (isset($user_data)) {
         $breadcrumbsData = Breadcrumbs::generate(Request::route()->getName(), $user_data);
         $breadcrumb_parent = $breadcrumbsData->where('title', '!=', $breadcrumb->title)->last();
+        
+        // Cek apakah foto menggunakan avatar default atau file upload
+        $previewUrl = null;
+        if ($user_data->foto) {
+            $previewUrl = str_starts_with($user_data->foto, 'avatar-')
+                ? asset('assets/img/avatar/' . $user_data->foto)
+                : asset('storage/uploads/users/' . $user_data->foto);
+        }
     } else {
         $breadcrumbsData = Breadcrumbs::generate(Request::route()->getName());
         $breadcrumb_parent = $breadcrumbsData->where('title', '!=', $breadcrumb->title)->last();
+        $previewUrl = null;
     }
 @endphp
 
@@ -58,6 +67,7 @@
                     <x-ui.file
                         name="foto"
                         label="Foto"
+                        :previewUrl="$previewUrl"
                     />
                 </div>
 

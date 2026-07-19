@@ -50,23 +50,11 @@
                         />
 
                         <!-- Favicon -->
-                        <div>
-                            <label class="mb-2 block text-base font-satoshi-medium text-slate-700">Favicon</label>
-                            <div class="flex items-center gap-4">
-                                <div class="flex-1">
-                                    <x-ui.file
-                                        name="favicon"
-                                        onchange="previewImage(this)"
-                                    />
-                                </div>
-                                <div class="h-12 w-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-1 shrink-0 overflow-hidden">
-                                    <img id="prev"
-                                         class="h-full w-full object-contain"
-                                         src="{{ isset($favicon) ? asset('storage/'.$favicon) : asset('images/no-image.png') }}"
-                                         alt="favicon">
-                                </div>
-                            </div>
-                        </div>
+                        <x-ui.file
+                            name="favicon"
+                            label="Favicon"
+                            :previewUrl="isset($favicon) ? asset('storage/'.$favicon) : asset('images/no-image.png')"
+                        />
                     </div>
 
                     <!-- Description -->
@@ -101,16 +89,6 @@
 
 @push('scripts')
 <script>
-    /* ---------- Preview favicon ---------- */
-    function previewImage(input){
-        const prev = document.getElementById('prev');
-        if(input.files && input.files[0]){
-            const r = new FileReader();
-            r.onload = e => prev.src = e.target.result;
-            r.readAsDataURL(input.files[0]);
-        }
-    }
-
     /* ---------- Description counter ------ */
     const desc = document.getElementById('description');
     const cnt  = document.getElementById('count');
