@@ -29,25 +29,28 @@
                 --tag-remove-bg: #cbd5e1;
                 --tag-remove-btn-color: #475569;
                 --tag-remove-btn-bg--hover: #f1f5f9;
-                --tag-pad: 0.3rem 0.6rem;
+                --tag-pad: 0.2rem 0.5rem;
                 --tag-inset-shadow-size: 0;
                 --placeholder-color: #94a3b8;
                 border-radius: 1rem !important; /* rounded-2xl */
                 font-family: 'Satoshi', sans-serif;
                 font-weight: 500;
-                padding: 0.25rem 0.5rem !important;
+                padding: 0.35rem 0.75rem !important;
                 background-color: transparent;
                 width: 100%;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
             }
             .tagify:hover {
                 border-color: transparent;
             }
             .tagify__input {
-                margin: 0.15rem !important;
-                padding: 0.25rem 0.5rem !important;
+                margin: 0.1rem !important;
+                padding: 0.2rem 0.4rem !important;
             }
             .tagify__tag {
-                margin: 0.25rem !important;
+                margin: 0.1rem 0.15rem !important;
                 border-radius: 0.5rem !important;
             }
             .tagify__tag > div {
@@ -78,7 +81,7 @@
         </label>
     @endif
 
-    <div class="w-full rounded-2xl border px-2 py-1.5 text-base font-satoshi-medium outline-none transition focus-within:ring-2 focus-within:bg-white {{ $statusClasses }}">
+    <div class="w-full rounded-2xl border p-0 text-base font-satoshi-medium outline-none transition focus-within:ring-2 focus-within:bg-white {{ $statusClasses }}">
         <input 
             {{ $attributes->merge([
                 'id' => $inputId,
