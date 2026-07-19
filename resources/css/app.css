@@ -3,7 +3,7 @@
 /* Satoshi Variable Font */
 @font-face {
     font-family: "Satoshi";
-    src: url("/assets/fonts/satoshi/Satoshi-Variable.ttf") format("truetype");
+    src: url("/assets/font/satoshi/Satoshi-Variable.ttf") format("truetype");
     font-weight: 300 900;
     font-style: normal;
     font-display: swap;
@@ -53,3 +53,5 @@
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
+
+@import "./datatable.css";

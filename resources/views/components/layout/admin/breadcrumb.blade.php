@@ -21,7 +21,7 @@
                                     {{ $breadcrumb->title }}
                                 </a>
                             @else
-                                <span class="text-lg font-satoshi-medium text-slate-800 font-satoshi-bold">
+                                <span class="text-lg font-satoshi-medium text-slate-800">
                                     {{ $breadcrumb->title }}
                                 </span>
                             @endif

@@ -14,41 +14,43 @@ class UserDataTable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('foto', function ($row) {
-                $src = $row->foto == '1.png'
-                    ? asset('assets/img/avatars/' . $row->foto)
+                $src = str_starts_with($row->foto, 'avatar-')
+                    ? asset('assets/img/avatar/' . $row->foto)
                     : asset('storage/uploads/avatars/' . $row->foto);
 
-                return '<img src="'.$src.'" width="40" height="40" class="rounded-circle">';
+                // Mengubah kelas Bootstrap rounded-circle ke Tailwind rounded-full
+                return '<img src="'.$src.'" class="w-10 h-10 rounded-full object-cover mx-auto">';
             })
             ->addColumn('action', function ($row) {
+                // Mengubah tombol Bootstrap ke gaya Tailwind CSS
                 $detail = '<a href="'.route('user.role', $row->uuid).'" 
-                            class="btn btn-sm btn-text-info rounded-pill btn-icon"
+                            class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors font-satoshi-medium"
                             data-bs-toggle="tooltip" title="Detail / Permissions">
-                            <i class="ri ri-eye-line icon-20px"></i></a>';
+                            <i class="ri ri-eye-line text-lg"></i></a>';
 
                 $edit = '<a href="'.route('user.edit', $row->uuid).'" 
-                        class="btn btn-sm btn-text-secondary rounded-pill btn-icon"
+                        class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors font-satoshi-medium"
                         data-bs-toggle="tooltip" title="Edit">
-                        <i class="ri ri-edit-line icon-20px"></i></a>';
+                        <i class="ri ri-edit-line text-lg"></i></a>';
 
                 $delete = '
-                            <form action="'.route('user.destroy', $row->uuid).'" method="POST" style="display:inline-block;" class="delete-form">
+                            <form action="'.route('user.destroy', $row->uuid).'" method="POST" style="display:inline-block;" class="delete-form m-0">
                                 '.csrf_field().method_field('DELETE').'
-                                <button type="button" class="btn btn-sm btn-text-secondary rounded-pill btn-icon delete-btn"
+                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-600 hover:bg-slate-100 transition-colors delete-btn font-satoshi-medium"
                                     data-id="'.$row->uuid.'"
                                     data-bs-toggle="tooltip" title="Delete">
-                                    <i class="ri ri-delete-bin-line icon-20px"></i>
+                                    <i class="ri ri-delete-bin-line text-lg"></i>
                                 </button>
                             </form>';
 
-                return $detail.' '.$edit.' '.$delete;
+                return '<div class="flex items-center space-x-2 justify-center">' . $detail.' '.$edit.' '.$delete . '</div>';
             })
             ->rawColumns(['foto', 'action']);
     }
 
     public function query(User $model)
     {
-        return $model->newQuery()->whereNull('banned_at');;
+        return $model->newQuery()->whereNull('banned_at');
     }
 
     public function html()
@@ -57,27 +59,24 @@ class UserDataTable extends DataTable
             ->setTableId('user-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1)
+            ->orderBy(2) // Diubah ke indeks 2 (Username) karena indeks 1 (Foto) tidak dapat di-order
             ->responsive(true)
-            ->addTableClass('table table-bordered table-hover align-middle bg-white')
+            // Menggunakan styling tabel clean ala Tailwind CSS
+            ->addTableClass('min-w-full divide-y divide-slate-200 overflow-hidden bg-white text-sm font-satoshi-medium text-slate-700')
             ->parameters([
-                'dom' => '<"row mb-3"
-                              <"col-md-6 d-flex align-items-center"l>
-                              <"col-md-6 d-flex justify-content-end"f>
-                           >
-                           <"table-responsive"tr>
-                           <"row mt-3"
-                              <"col-md-6"i>
-                              <"col-md-6 d-flex justify-content-end"p>
-                           >',
+                // Mengatur layout DOM menggunakan Flexbox & Grid Tailwind CSS
+                'dom' => '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 font-satoshi-medium"lf>' .
+                         '<"overflow-x-auto w-full"tr>' .
+                         '<"flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4 font-satoshi-medium text-slate-500 text-sm"ip>',
                 'language' => [
-                    'search' => 'Search',
+                    // Memberikan kelas pembungkus kustom Tailwind pada input bawaan DataTables
+                    'search' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Search:</span>',
                     'searchPlaceholder' => 'Search user...',
-                    'lengthMenu' => '_MENU_ Entries',
+                    'lengthMenu' => '<span class="text-slate-600 mr-2 font-satoshi-medium">Show</span> _MENU_ <span class="text-slate-600 ml-2 font-satoshi-medium">entries</span>',
                     'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
                     'paginate' => [
-                        'previous' => '<i class="ri-arrow-left-s-line"></i>',
-                        'next' => '<i class="ri-arrow-right-s-line"></i>'
+                        'previous' => '<i class="ri-arrow-left-s-line text-lg"></i>',
+                        'next' => '<i class="ri-arrow-right-s-line text-lg"></i>'
                     ],
                 ],
             ]);
@@ -85,13 +84,14 @@ class UserDataTable extends DataTable
 
     protected function getColumns()
     {
+        // Menambahkan properti class di setiap kolom untuk memastikan th/td mematuhi aturan layouting & font Tailwind
         return [
-            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(30),
-            Column::make('foto')->title('Foto')->orderable(false)->searchable(false)->width(60),
-            Column::make('username')->title('Username'),
-            Column::make('name')->title('Name'),
-            Column::make('email')->title('Email'),
-            Column::computed('action')->title('Action')->exportable(false)->printable(false)->width(120),
+            Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false)->width(40)->addClass('text-center px-4 py-3 bg-slate-50 font-satoshi-medium text-slate-500 border-b border-slate-200'),
+            Column::make('foto')->title('Foto')->orderable(false)->searchable(false)->width(70)->addClass('text-center px-4 py-3 border-b border-slate-200'),
+            Column::make('username')->title('Username')->addClass('px-4 py-3 border-b border-slate-200 text-slate-900 font-semibold'),
+            Column::make('name')->title('Name')->addClass('px-4 py-3 border-b border-slate-200'),
+            Column::make('email')->title('Email')->addClass('px-4 py-3 border-b border-slate-200 text-slate-500'),
+            Column::computed('action')->title('Action')->exportable(false)->printable(false)->width(120)->addClass('text-center px-4 py-3 border-b border-slate-200'),
         ];
     }
 
