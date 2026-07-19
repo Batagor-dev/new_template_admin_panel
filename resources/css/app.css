@@ -55,3 +55,20 @@
 @source "../**/*.js";
 
 @import "./datatable.css";
+
+/* --- Custom Page Loader & Progress Bar (NProgress style) --- */
+#nprogress {
+    pointer-events: none;
+}
+
+#nprogress .bar {
+    background: linear-gradient(90deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    transition: width 200ms ease, opacity 200ms linear;
+    opacity: 1;
+}

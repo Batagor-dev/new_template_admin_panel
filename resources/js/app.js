@@ -63,3 +63,129 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener("resize", setInitialHeight);
     });
 });
+
+// --- Custom Page Loader & Progress Bar (NProgress style) ---
+const ProgressBar = {
+    status: null, // current percentage (0 to 1)
+    timeout: null,
+    elements: {
+        container: null,
+        bar: null,
+        spinner: null
+    },
+
+    create() {
+        if (this.elements.container) return;
+
+        const container = document.createElement('div');
+        container.id = 'nprogress';
+        
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.setAttribute('role', 'bar');
+
+        container.appendChild(bar);
+        document.body.appendChild(container);
+
+        this.elements.container = container;
+        this.elements.bar = bar;
+    },
+
+    set(n) {
+        this.create();
+        n = Math.max(0, Math.min(1, n));
+        this.status = n;
+
+        // Force repaint
+        this.elements.bar.offsetWidth;
+
+        this.elements.bar.style.width = (n * 100) + '%';
+        this.elements.bar.style.opacity = '1';
+    },
+
+    start() {
+        if (this.status !== null) {
+            if (this.status >= 1) this.set(0);
+        } else {
+            this.set(0);
+        }
+
+        const work = () => {
+            this.timeout = setTimeout(() => {
+                if (this.status === null || this.status >= 0.99) return;
+                
+                // Slow down progress as it gets closer to 100%
+                let amount = 0;
+                if (this.status >= 0 && this.status < 0.2) amount = 0.1;
+                else if (this.status >= 0.2 && this.status < 0.5) amount = 0.04;
+                else if (this.status >= 0.5 && this.status < 0.8) amount = 0.02;
+                else if (this.status >= 0.8 && this.status < 0.99) amount = 0.005;
+
+                this.set(this.status + amount);
+                work();
+            }, 200);
+        };
+
+        work();
+    },
+
+    done() {
+        if (this.status === null) return;
+
+        clearTimeout(this.timeout);
+        this.set(1);
+
+        setTimeout(() => {
+            if (this.elements.bar) {
+                this.elements.bar.style.opacity = '0';
+            }
+            setTimeout(() => {
+                if (this.elements.bar) {
+                    this.elements.bar.style.width = '0%';
+                }
+                this.status = null;
+            }, 200);
+        }, 300);
+    }
+};
+
+window.ProgressBar = ProgressBar;
+
+// Automatically start on link click
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    const target = link.getAttribute('target');
+
+    if (!href) return;
+    if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    if (target && target === '_blank') return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; 
+
+    // Same origin check
+    try {
+        const url = new URL(href, window.location.href);
+        if (url.origin !== window.location.origin) return;
+    } catch (e) {
+        return;
+    }
+
+    ProgressBar.start();
+});
+
+// Run complete animation on load
+ProgressBar.start();
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        ProgressBar.done();
+    }, 150);
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        ProgressBar.done();
+    }
+});
+
