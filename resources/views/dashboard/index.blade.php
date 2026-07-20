@@ -27,7 +27,34 @@
             <form action="" class="row g-1">
                 <x-forms.horizontal.input name="name" label="Nama" placeholder="Nama" value="" />
                 <x-forms.horizontal.input name="email" label="Email" placeholder="Email" value="" />
-                <x-forms.horizontal.file name="attachment" label="Lampiran" placeholder="Pilih berkas..." />
+                <!-- Dropzone 1: Multi Image -->
+                <div class="mb-4 grid grid-cols-12 items-start gap-4">
+                    <label class="col-span-4 md:col-span-2 pt-2 flex items-center font-satoshi-medium text-slate-700">
+                        Gallery (Multi)
+                    </label>
+                    <div class="col-span-8 md:col-span-10">
+                        <x-ui.dropzone 
+                            name="gallery[]" 
+                            multiple="true"
+                            accept="image/*"
+                            maxSize="2"
+                        />
+                    </div>
+                </div>
+
+                <!-- Dropzone 2: Basic File (PDF, Excel, Docx) -->
+                <div class="mb-4 grid grid-cols-12 items-start gap-4">
+                    <label class="col-span-4 md:col-span-2 pt-2 flex items-center font-satoshi-medium text-slate-700">
+                        Dokumen (Single)
+                    </label>
+                    <div class="col-span-8 md:col-span-10">
+                        <x-ui.dropzone 
+                            name="document" 
+                            accept=".pdf,.xlsx,.xls,.docx,.doc"
+                            maxSize="10"
+                        />
+                    </div>
+                </div>
                 <x-forms.horizontal.textarea name="message" label="Pesan" placeholder="Tulis pesan Anda di sini..." value="" rows="4" />
                 <x-forms.horizontal.switches name="is_active" label="Status Aktif" />
                 <div class="mt-4 flex justify-end">

@@ -3,13 +3,21 @@
     'id' => null,
     'label' => '',
     'checked' => false,
+    'reverse' => false,
 ])
 
 @php
     $checkboxId = $id ?? $name;
 @endphp
 
-<div class="flex items-center">
+<div class="flex items-center gap-2.5">
+    {{-- Label di samping kiri checkbox jika reverse --}}
+    @if($reverse && $label)
+        <label for="{{ $checkboxId }}" class="cursor-pointer select-none text-base font-medium text-slate-700 transition hover:text-black">
+            {{ $label }}
+        </label>
+    @endif
+
     <div class="relative flex items-center">
         <input 
             type="checkbox" 
@@ -29,9 +37,9 @@
         </span>
     </div>
 
-    {{-- Label di samping kanan checkbox --}}
-    @if($label)
-        <label for="{{ $checkboxId }}" class="ml-2.5 cursor-pointer select-none text-base font-medium text-slate-700 transition hover:text-black">
+    {{-- Label di samping kanan checkbox jika tidak reverse --}}
+    @if(!$reverse && $label)
+        <label for="{{ $checkboxId }}" class="cursor-pointer select-none text-base font-medium text-slate-700 transition hover:text-black">
             {{ $label }}
         </label>
     @endif

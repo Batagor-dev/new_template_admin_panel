@@ -140,6 +140,7 @@
             // Load initial content
             if (this.content) {
                 this.editor.root.innerHTML = this.content;
+                this.$refs.hiddenInput.value = this.content; // Sync initial raw HTML to hidden input
             }
 
             // Sync with hidden input

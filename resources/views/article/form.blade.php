@@ -19,16 +19,17 @@
 @endsection
 
 @section('content')
-    <div class="space-y-6">
-        <x-ui.card>
-            <form method="POST" action="{{ $action }}" class="space-y-6" enctype="multipart/form-data">
-                @isset($article_data) @method('PUT') @endisset
-                @csrf
+    <form method="POST" action="{{ $action }}" class="space-y-6" enctype="multipart/form-data">
+        @isset($article_data) @method('PUT') @endisset
+        @csrf
 
-                <div>
-                    <h5 class="text-lg font-satoshi-bold text-slate-900 mb-4">{{ $sub_title }}</h5>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Primary Content -->
+            <div class="lg:col-span-8 space-y-3">
+                <x-ui.card>
+                    <h5 class="text-lg font-satoshi-bold text-slate-900 mb-6">{{ $sub_title }}</h5>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-6">
                         <!-- Title -->
                         <x-ui.input 
                             name="title" 
@@ -38,6 +39,35 @@
                             required
                         />
 
+                        <!-- Content -->
+                        <x-ui.editor 
+                            name="content" 
+                            label="Content" 
+                            placeholder="Write article content here..." 
+                            :value="old('content', $article_data->content ?? '')"
+                        />
+                    </div>
+                </x-ui.card>
+            </div>
+
+            <!-- Right Column: Settings & Media -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Cover Image -->
+                <x-ui.card>
+                    <h5 class="text-lg font-satoshi-bold text-slate-900 mb-4">Cover Image</h5>
+                    <x-ui.dropzone 
+                        name="image" 
+                        accept="image/*"
+                        :previewUrl="isset($article_data->image_path) ? asset('storage/'.$article_data->image_path) : null"
+                        :required="!isset($article_data)"
+                    />
+                </x-ui.card>
+
+                <!-- Settings -->
+                <x-ui.card>
+                    <h5 class="text-lg font-satoshi-bold text-slate-900 mb-4">Settings</h5>
+                    
+                    <div class="space-y-6">
                         <!-- Category -->
                         <x-ui.select2 
                             name="article_category_id" 
@@ -47,9 +77,7 @@
                             :value="old('article_category_id', $article_data->article_category_id ?? '')"
                             required
                         />
-                    </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         <!-- Published At -->
                         <x-ui.date 
                             name="published_at" 
@@ -59,27 +87,6 @@
                             required
                         />
 
-                        <!-- Highlight -->
-                        <div class="flex items-center pt-8">
-                            <x-ui.checkbox 
-                                name="highlite" 
-                                label="Highlight Article" 
-                                value="1"
-                                :checked="old('highlite', $article_data->highlite ?? false) ? true : false"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        <!-- Image -->
-                        <x-ui.file 
-                            name="image" 
-                            label="Cover Image" 
-                            placeholder="Pilih gambar sampul"
-                            :previewUrl="isset($article_data->image_path) ? asset('storage/'.$article_data->image_path) : null"
-                            :required="!isset($article_data)"
-                        />
-
                         <!-- Tags -->
                         <x-ui.tagify 
                             name="tags" 
@@ -87,31 +94,32 @@
                             placeholder="Add tags..." 
                             value="{{ old('tags', $article_data->tags ?? '') }}"
                         />
-                    </div>
 
-                    <!-- Content -->
-                    <div class="mt-6">
-                        <x-ui.editor 
-                            name="content" 
-                            label="Content" 
-                            placeholder="Write article content here..." 
-                            value="{{ old('content', $article_data->content ?? '') }}"
-                        />
+                        <!-- Highlight -->
+                        <div class="pt-2">
+                            <x-ui.checkbox 
+                                name="highlite" 
+                                label="Highlight Article" 
+                                value="1"
+                                :reverse="true"
+                                :checked="old('highlite', $article_data->highlite ?? false) ? true : false"
+                            />
+                        </div>
                     </div>
-                </div>
+                </x-ui.card>
+            </div>
+        </div>
 
-                <!-- Submit / Cancel -->
-                <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
-                    <x-ui.button type="button" font="medium" size="sm" style="secondary" onclick="window.location.href='{{ $breadcrumb_parent?->url ?? route('article.index') }}'">
-                        Cancel
-                    </x-ui.button>
-                    <x-ui.button type="submit" font="bold" size="sm">
-                        Submit
-                    </x-ui.button>
-                </div>
-            </form>
-        </x-ui.card>
-    </div>
+        <!-- Form Actions (Outside Card) -->
+        <div class="flex items-center justify-end gap-3 pt-2">
+            <x-ui.button type="button" font="medium" size="sm" style="secondary" onclick="window.location.href='{{ $breadcrumb_parent?->url ?? route('article.index') }}'">
+                Cancel
+            </x-ui.button>
+            <x-ui.button type="submit" font="bold" size="sm">
+                Submit
+            </x-ui.button>
+        </div>
+    </form>
 @endsection
 
 @push('scripts')
