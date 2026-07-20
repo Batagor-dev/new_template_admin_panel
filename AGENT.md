@@ -43,19 +43,6 @@ resources/
             footer.blade.php
             breadcrumb.blade.php
             children.blade.php     # recursive helper untuk menu nested
-      forms/
-        vertikal form/
-            input.blade.php
-            select.blade.php
-            textarea.blade.php
-            checkbox.blade.php
-            form-group.blade.php   # label + field + error message
-        horizontal form/
-            input.blade.php
-            select.blade.php
-            textarea.blade.php
-            checkbox.blade.php
-            form-group.blade.php   # label + field + error message
       ui/
         button.blade.php
         google-button.blade.php
@@ -91,34 +78,8 @@ resources/
   - Mengikuti permission (`@can`) dan active state.
 - [ ] `x-layout.admin.footer` — Footer Admin (Copyright, Versi Aplikasi)
 
-### 4.2 Basic UI Components
 
-- [ ] `x-admin.card`
-- [ ] `x-admin.button` (variant: primary/secondary/danger, size: sm/md/lg)
-- [ ] `x-admin.badge` (status: success/warning/danger/info)
-- [ ] `x-admin.table` (dengan slot header & body agar tetap fleksibel)
-- [ ] `x-admin.alert`
-- [ ] `x-admin.modal`
-
-### 4.3 Form Components
-
-#### Vertical Form (`components/forms/vertical/`)
-
-- [ ] `x-forms.vertical.form-group` — Wrapper untuk label, field, dan error message dengan layout vertikal.
-- [ ] `x-forms.vertical.input` — Input field (`text`, `email`, `password`, dll.) dengan dukungan props `name`, `label`, `type`, `placeholder`, `value`, dan validasi otomatis dari `$errors`.
-- [ ] `x-forms.vertical.select` — Select field dengan dukungan placeholder, options, selected value, dan Select2 (opsional).
-- [ ] `x-forms.vertical.textarea` — Textarea dengan dukungan old value dan validasi otomatis.
-- [ ] `x-forms.vertical.checkbox` — Checkbox dengan label dan validasi.
-
-#### Horizontal Form (`components/forms/horizontal/`)
-
-- [ ] `x-forms.horizontal.form-group` — Wrapper untuk label, field, dan error message dengan layout horizontal (label di kiri, field di kanan).
-- [ ] `x-forms.horizontal.input` — Input field untuk layout horizontal.
-- [ ] `x-forms.horizontal.select` — Select field untuk layout horizontal.
-- [ ] `x-forms.horizontal.textarea` — Textarea untuk layout horizontal.
-- [ ] `x-forms.horizontal.checkbox` — Checkbox untuk layout horizontal.
-
-### 4.4 Chart (Opsional)
+### 4.2 Chart (Opsional)
 
 - [ ] `x-admin.chart` — wrapper ApexCharts, terima props `type` (line/bar/donut) dan `data` (array/JSON) supaya bisa dipakai ulang di halaman manapun tanpa nulis ulang script inisialisasi
 
