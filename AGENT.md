@@ -97,3 +97,6 @@ resources/
 
 - Isi kode auth & layout lama belum di-review langsung — sebaiknya ditempel/upload supaya konvensi (penamaan, struktur folder existing) bisa disamakan, bukan dibuat dari asumsi.
 - Skema warna/branding admin panel belum ditentukan.
+
+## Note
+Gunakan bahasa yang mudah di pahami dan pakai lah bahasa indonesai pada saat berinteraksi
