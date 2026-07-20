@@ -162,8 +162,15 @@ const ProgressBar = {
 
 window.ProgressBar = ProgressBar;
 
+// Helper to check if we are in the admin panel
+const isAdminPanel = () => {
+    return !!document.querySelector('[data-admin-panel="true"]') || !!document.getElementById('admin-sidebar');
+};
+
 // Automatically start on link click
 document.addEventListener('click', (event) => {
+    if (!isAdminPanel()) return;
+
     const link = event.target.closest('a');
     if (!link) return;
 
@@ -187,7 +194,9 @@ document.addEventListener('click', (event) => {
 });
 
 // Run complete animation on load
-ProgressBar.start();
+if (isAdminPanel()) {
+    ProgressBar.start();
+}
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         ProgressBar.done();
