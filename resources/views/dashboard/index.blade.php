@@ -21,51 +21,6 @@
         <p class="text-base text-slate-500 mt-1">Berikut ringkasan statistik, analitik, dan aktivitas terbaru pada sistem Anda hari ini.</p>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-1">
-        <!-- Recent Activities Card -->
-        <x-ui.card class="lg:col-span-2 p-6 flex flex-col">
-            <form action="" class="row g-1">
-                <x-forms.horizontal.input name="name" label="Nama" placeholder="Nama" value="" />
-                <x-forms.horizontal.input name="email" label="Email" placeholder="Email" value="" />
-                <!-- Dropzone 1: Multi Image -->
-                <div class="mb-4 grid grid-cols-12 items-start gap-4">
-                    <label class="col-span-4 md:col-span-2 pt-2 flex items-center font-satoshi-medium text-slate-700">
-                        Gallery (Multi)
-                    </label>
-                    <div class="col-span-8 md:col-span-10">
-                        <x-ui.dropzone 
-                            name="gallery[]" 
-                            multiple="true"
-                            accept="image/*"
-                            maxSize="2"
-                        />
-                    </div>
-                </div>
-
-                <!-- Dropzone 2: Basic File (PDF, Excel, Docx) -->
-                <div class="mb-4 grid grid-cols-12 items-start gap-4">
-                    <label class="col-span-4 md:col-span-2 pt-2 flex items-center font-satoshi-medium text-slate-700">
-                        Dokumen (Single)
-                    </label>
-                    <div class="col-span-8 md:col-span-10">
-                        <x-ui.dropzone 
-                            name="document" 
-                            accept=".pdf,.xlsx,.xls,.docx,.doc"
-                            maxSize="10"
-                        />
-                    </div>
-                </div>
-                <x-forms.horizontal.textarea name="message" label="Pesan" placeholder="Tulis pesan Anda di sini..." value="" rows="4" />
-                <x-forms.horizontal.switches name="is_active" label="Status Aktif" />
-                <div class="mt-4 flex justify-end">
-                    <x-ui.button type="submit">
-                        Simpan
-                    </x-ui.button>
-                </div>
-            </form>
-        </x-ui.card>
-    </div>
-
     <!-- Quick Stats Grid (Mengikuti Gaya Visual Gambar 1) -->
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Stat Card 1 -->
