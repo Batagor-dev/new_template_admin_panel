@@ -22,14 +22,13 @@
     <div class="relative" id="profile-dropdown-wrapper">
       <button type="button" id="btn-profile-dropdown" class="flex items-center gap-2.5 p-1 rounded-xl hover:bg-slate-50 transition-all cursor-pointer" onclick="toggleProfileDropdown()">
         @php
-            $avatar = 'assets/img/avatar/avatar-2.jpg';
-
-            if (
-                Auth::user()->foto &&
-                file_exists(public_path('assets/img/avatar/' . Auth::user()->foto))
-            ) {
-                $avatar = 'assets/img/avatar/' . Auth::user()->foto;
-            }
+            $avatar = Auth::user()->foto && str_starts_with(Auth::user()->foto, 'http')
+                ? Auth::user()->foto
+                : (Auth::user()->foto && str_starts_with(Auth::user()->foto, 'avatar-')
+                    ? asset('assets/img/avatar/' . Auth::user()->foto)
+                    : (Auth::user()->foto 
+                        ? asset('storage/uploads/users/' . Auth::user()->foto) 
+                        : asset('assets/img/avatar/avatar-1.jpg')));
         @endphp
         
         <div class="relative">
@@ -76,10 +75,10 @@
         <button 
           type="button" 
           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-          class="w-full flex items-center font-satoshi-bold gap-2.5 px-3 py-2 rounded-xl text-sm bg-rose-600 text-white hover:bg-rose-700 transition-colors cursor-pointer text-left"
+          class="w-full flex items-center justify-center font-satoshi-semibold gap-2.5 px-3 py-1 rounded-lg text-sm bg-rose-600 text-white hover:bg-rose-700 transition-colors cursor-pointer text-left"
         >
-          <i class="ri-logout-box-r-line text-lg text-white"></i>
-          <span>Logout</span>
+        <span>Logout</span>
+        <i class="ri-logout-box-r-line text-lg text-white"></i>
         </button>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

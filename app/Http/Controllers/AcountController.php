@@ -28,12 +28,12 @@ class AcountController extends Controller
             $file = $request->file('foto');
             $filename = time() . '.jpg';
 
-            // Simpan file hasil crop
-            $file->storeAs('uploads/avatars', $filename, 'public');
+            // Simpan file hasil crop ke uploads/users
+            $file->storeAs('uploads/users', $filename, 'public');
 
-            // Hapus foto lama jika bukan default
-            if ($user->foto && $user->foto !== '1.png' && \Storage::disk('public')->exists('uploads/avatars/' . $user->foto)) {
-                \Storage::disk('public')->delete('uploads/avatars/' . $user->foto);
+            // Hapus foto lama jika bukan default avatar
+            if ($user->foto && !str_starts_with($user->foto, 'avatar-') && \Storage::disk('public')->exists('uploads/users/' . $user->foto)) {
+                \Storage::disk('public')->delete('uploads/users/' . $user->foto);
             }
 
             $user->foto = $filename;
