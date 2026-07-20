@@ -233,6 +233,32 @@
                         this.addFiles(fileList);
                     },
                     
+                    validateFileType(file) {
+                        const accept = '{{ $accept }}';
+                        if (!accept || accept === '*' || accept === '*/*') return true;
+                        
+                        const rules = accept.split(',').map(r => r.trim().toLowerCase());
+                        const fileName = file.name.toLowerCase();
+                        const fileType = file.type.toLowerCase();
+                        
+                        return rules.some(rule => {
+                            if (rule.startsWith('.')) {
+                                return fileName.endsWith(rule);
+                            } else if (rule.endsWith('/*')) {
+                                const typeCategory = rule.replace('/*', '');
+                                return fileType.startsWith(typeCategory);
+                            } else {
+                                return fileType === rule;
+                            }
+                        });
+                    },
+                    
+                    getAcceptedTypesString() {
+                        const accept = '{{ $accept }}';
+                        if (accept === 'image/*') return 'images';
+                        return accept.split(',').join(', ');
+                    },
+
                     addFiles(fileList) {
                         if (!this.multiple) {
                             // If basic/single, revoke previous blob URL to prevent memory leaks
@@ -243,8 +269,21 @@
                         }
                         
                         fileList.forEach(file => {
+                            // Validate file type
+                            if (!this.validateFileType(file)) {
+                                this.$dispatch('show-toast', {
+                                    type: 'danger',
+                                    message: `File format "${file.name}" is not supported. Please upload ${this.getAcceptedTypesString()}.`
+                                });
+                                return;
+                            }
+
+                            // Validate file size
                             if (file.size > this.maxSize * 1024 * 1024) {
-                                alert(`File "${file.name}" is too large! Maximum allowed size is ${this.maxSize}MB.`);
+                                this.$dispatch('show-toast', {
+                                    type: 'danger',
+                                    message: `File "${file.name}" is too large! Maximum allowed size is ${this.maxSize}MB.`
+                                });
                                 return;
                             }
                             
