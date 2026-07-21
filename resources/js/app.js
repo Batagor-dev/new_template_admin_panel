@@ -16,8 +16,24 @@ window.togglePassword = function (inputId, button) {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+// ============================================================
+// AbortController to prevent duplicate listeners on Vite HMR
+// ============================================================
+if (window.__appAbortController) {
+    window.__appAbortController.abort();
+}
+window.__appAbortController = new AbortController();
+const signal = window.__appAbortController.signal;
+
+// ============================================================
+// Sidebar toggle initialization (idempotent, HMR-safe)
+// ============================================================
+function initSidebarToggles() {
     document.querySelectorAll("[data-sidebar-toggle]").forEach((button) => {
+        // Skip if already initialized (prevent double-binding)
+        if (button._sidebarInitialized) return;
+        button._sidebarInitialized = true;
+
         const targetId = button.dataset.target;
         if (!targetId) return;
 
@@ -40,7 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (e) => {
+            // Prevent click from bubbling issues
+            e.stopPropagation();
+            
             const isExpanded = button.getAttribute("aria-expanded") === "true";
             target.removeEventListener("transitionend", handleTransitionEnd);
 
@@ -60,12 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        window.addEventListener("resize", setInitialHeight);
+        window.addEventListener("resize", setInitialHeight, { signal });
     });
+}
 
-    // Initialize Select2 natively if available
+// ============================================================
+// Select2 initialization
+// ============================================================
+function initSelect2() {
     if (typeof jQuery !== 'undefined' && $.fn.select2) {
         $('.select2').each(function() {
+            // Skip if already initialized
+            if ($(this).data('select2')) return;
             $(this).select2({
                 width: '100%',
                 placeholder: $(this).data('placeholder') || 'Pilih opsi...',
@@ -73,101 +98,129 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-});
+}
+
+// ============================================================
+// Run initialization - works both on first load & HMR
+// ============================================================
+if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", () => {
+        initSidebarToggles();
+        initSelect2();
+    }, { once: true });
+} else {
+    // DOM already ready (HMR reload or deferred script)
+    initSidebarToggles();
+    initSelect2();
+}
 
 // --- Custom Page Loader & Progress Bar (NProgress style) ---
-const ProgressBar = {
-    status: null, // current percentage (0 to 1)
-    timeout: null,
-    elements: {
-        container: null,
-        bar: null,
-        spinner: null
-    },
+// Reuse existing ProgressBar if already defined (HMR-safe)
+if (!window.ProgressBar) {
+    window.ProgressBar = {
+        status: null,
+        timeout: null,
+        elements: {
+            container: null,
+            bar: null,
+            spinner: null
+        },
 
-    create() {
-        if (this.elements.container) return;
-
-        const container = document.createElement('div');
-        container.id = 'nprogress';
-        
-        const bar = document.createElement('div');
-        bar.className = 'bar';
-        bar.setAttribute('role', 'bar');
-
-        container.appendChild(bar);
-        document.body.appendChild(container);
-
-        this.elements.container = container;
-        this.elements.bar = bar;
-    },
-
-    set(n) {
-        this.create();
-        n = Math.max(0, Math.min(1, n));
-        this.status = n;
-
-        // Force repaint
-        this.elements.bar.offsetWidth;
-
-        this.elements.bar.style.width = (n * 100) + '%';
-        this.elements.bar.style.opacity = '1';
-    },
-
-    start() {
-        if (this.status !== null) {
-            if (this.status >= 1) this.set(0);
-        } else {
-            this.set(0);
-        }
-
-        const work = () => {
-            this.timeout = setTimeout(() => {
-                if (this.status === null || this.status >= 0.99) return;
-                
-                // Slow down progress as it gets closer to 100%
-                let amount = 0;
-                if (this.status >= 0 && this.status < 0.2) amount = 0.1;
-                else if (this.status >= 0.2 && this.status < 0.5) amount = 0.04;
-                else if (this.status >= 0.5 && this.status < 0.8) amount = 0.02;
-                else if (this.status >= 0.8 && this.status < 0.99) amount = 0.005;
-
-                this.set(this.status + amount);
-                work();
-            }, 200);
-        };
-
-        work();
-    },
-
-    done() {
-        if (this.status === null) return;
-
-        clearTimeout(this.timeout);
-        this.set(1);
-
-        setTimeout(() => {
-            if (this.elements.bar) {
-                this.elements.bar.style.opacity = '0';
+        create() {
+            // Reuse existing DOM element if present
+            const existing = document.getElementById('nprogress');
+            if (existing) {
+                this.elements.container = existing;
+                this.elements.bar = existing.querySelector('.bar');
+                if (this.elements.bar) return;
             }
+
+            if (this.elements.container) return;
+
+            const container = document.createElement('div');
+            container.id = 'nprogress';
+            
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.setAttribute('role', 'bar');
+
+            container.appendChild(bar);
+            document.body.appendChild(container);
+
+            this.elements.container = container;
+            this.elements.bar = bar;
+        },
+
+        set(n) {
+            this.create();
+            n = Math.max(0, Math.min(1, n));
+            this.status = n;
+
+            if (!this.elements.bar) return;
+
+            // Force repaint
+            this.elements.bar.offsetWidth;
+
+            this.elements.bar.style.width = (n * 100) + '%';
+            this.elements.bar.style.opacity = '1';
+        },
+
+        start() {
+            if (this.status !== null) {
+                if (this.status >= 1) this.set(0);
+            } else {
+                this.set(0);
+            }
+
+            const work = () => {
+                this.timeout = setTimeout(() => {
+                    if (this.status === null || this.status >= 0.99) return;
+                    
+                    let amount = 0;
+                    if (this.status >= 0 && this.status < 0.2) amount = 0.1;
+                    else if (this.status >= 0.2 && this.status < 0.5) amount = 0.04;
+                    else if (this.status >= 0.5 && this.status < 0.8) amount = 0.02;
+                    else if (this.status >= 0.8 && this.status < 0.99) amount = 0.005;
+
+                    this.set(this.status + amount);
+                    work();
+                }, 200);
+            };
+
+            work();
+        },
+
+        done() {
+            if (this.status === null) return;
+
+            clearTimeout(this.timeout);
+            this.set(1);
+
             setTimeout(() => {
                 if (this.elements.bar) {
-                    this.elements.bar.style.width = '0%';
+                    this.elements.bar.style.opacity = '0';
                 }
-                this.status = null;
-            }, 200);
-        }, 300);
-    }
-};
+                setTimeout(() => {
+                    if (this.elements.bar) {
+                        this.elements.bar.style.width = '0%';
+                    }
+                    this.status = null;
+                }, 200);
+            }, 300);
+        }
+    };
+}
 
-window.ProgressBar = ProgressBar;
+const ProgressBar = window.ProgressBar;
 
 // Helper to check if we are in the admin panel
 const isAdminPanel = () => {
     return !!document.querySelector('[data-admin-panel="true"]') || !!document.getElementById('admin-sidebar');
 };
 
-// Automatically start on link click
+// ============================================================
+// Progress bar link click handler (with AbortController to prevent duplicates)
+// ============================================================
 document.addEventListener('click', (event) => {
     if (!isAdminPanel()) return;
 
@@ -191,23 +244,29 @@ document.addEventListener('click', (event) => {
     }
 
     ProgressBar.start();
-});
+}, { signal });
 
-// Run complete animation on load
-if (isAdminPanel()) {
-    ProgressBar.start();
-}
-document.addEventListener('DOMContentLoaded', () => {
+// Run complete animation on load (wait for DOM to be ready)
+function initProgressBar() {
+    if (isAdminPanel()) {
+        ProgressBar.start();
+    }
     setTimeout(() => {
         ProgressBar.done();
     }, 150);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgressBar, { once: true });
+} else {
+    initProgressBar();
+}
 
 window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
         ProgressBar.done();
     }
-});
+}, { signal });
 
 // --- Cegah Double Submit Form Secara Global ---
 document.addEventListener("submit", (event) => {
@@ -238,5 +297,14 @@ document.addEventListener("submit", (event) => {
             ${loadingText}
         `;
     });
-});
+}, { signal });
+
+// ============================================================
+// Vite HMR support - clean up and re-init on hot reload
+// ============================================================
+if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+        // Module will re-execute, AbortController at top will clean up old listeners
+    });
+}
 
