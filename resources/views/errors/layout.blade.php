@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="id" class="h-full bg-[#f7f7f7]">
+<html lang="en" class="h-full bg-[#f7f7f7]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('code', 'Error') - @yield('title', 'Terjadi Kesalahan')</title>
+    <title>@yield('code', 'Error') - @yield('title', 'An Error Occurred')</title>
     
     {{-- Remix Icon --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
@@ -32,25 +32,25 @@
 
       {{-- Title --}}
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-satoshi-bold text-slate-900 tracking-tight leading-tight">
-        @yield('title', 'Terjadi Kesalahan')
+        @yield('title', 'An Error Occurred')
       </h1>
 
       {{-- Subtitle / Message --}}
       <p class="mt-3 sm:mt-4 text-base sm:text-lg text-slate-500 font-satoshi-regular leading-relaxed max-w-md">
-        @yield('message', 'Maaf, terjadi kesalahan saat memproses permintaan Anda.')
+        @yield('message', 'Sorry, an error occurred while processing your request.')
       </p>
 
       {{-- Action Buttons --}}
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
         <x-ui.button :href="url('/')" color="primary" size="md">
-          <span>@yield('button_text', 'Kembali ke Beranda')</span>
-          <i class="ri-arrow-right-line text-lg"></i>
+          <span>@yield('button_text', 'Back to Home')</span>
+          <i class="ri-arrow-right-line text-lg m-1"></i>
         </x-ui.button>
 
         @hasSection('show_back_button')
           <x-ui.button type="button" onclick="window.history.back()" color="primary" size="md">
             <i class="ri-arrow-left-line text-lg"></i>
-            <span>Kembali</span>
+            <span>Go Back</span>
           </x-ui.button>
         @endif
       </div>

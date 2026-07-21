@@ -15,7 +15,7 @@
             @yield('brand', 'Techarea')
           </a>
           <p class="mt-2 text-base text-slate-500 font-satoshi-medium">
-            @yield('subtitle', 'Masuk untuk mengelola aplikasi.')
+            @yield('subtitle', 'Sign in to manage the application.')
           </p>
         </div>
 

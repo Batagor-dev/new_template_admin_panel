@@ -43,6 +43,6 @@ class SettingController extends Controller
         Setting::setValue($payload);
 
         return redirect()->route('setting.index')
-                         ->with('success', 'Pengaturan berhasil disimpan.');
+                         ->with('success', __('messages.settings_saved'));
     }
 }

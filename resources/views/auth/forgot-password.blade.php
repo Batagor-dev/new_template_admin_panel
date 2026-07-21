@@ -1,7 +1,7 @@
 @extends('layouts.auth.main')
 
-@section('title', 'Lupa Password')
-@section('subtitle', 'Masukkan email Anda untuk menerima link reset password.')
+@section('title', 'Forgot Password')
+@section('subtitle', 'Enter your email to receive a password reset link.')
 
 @section('content')
   <div class="space-y-6">
@@ -30,17 +30,17 @@
       </div>
 
       <div>
-        <x-ui.button type="submit" font="bold" size="md" class="w-full">Kirim Link Reset</x-ui.button>
+        <x-ui.button type="submit" font="bold" size="md" class="w-full">Send Reset Link</x-ui.button>
       </div>
     </form>
 
     <div class="text-center text-sm text-slate-600">
-        Sudah ingat password Anda?
+        Remember your password?
         <a
             href="{{ route('login') }}"
             class="font-semibold text-slate-900 hover:underline"
         >
-            Masuk sekarang
+            Sign in now
         </a>
     </div>
   </div>

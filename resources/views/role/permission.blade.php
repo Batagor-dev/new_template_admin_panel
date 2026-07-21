@@ -48,8 +48,8 @@
         <x-ui.card>
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h5 class="text-lg font-satoshi-bold text-slate-900">Hak Akses : {{ $role->name }}</h5>
-                    <p class="text-sm text-slate-400 mt-1 font-satoshi">Kelola hak akses untuk role ini</p>
+                    <h5 class="text-lg font-satoshi-bold text-slate-900">Permissions : {{ $role->name }}</h5>
+                    <p class="text-sm text-slate-400 mt-1 font-satoshi">Manage permissions for this role</p>
                 </div>
                 {{-- Toggle Select All --}}
                 <button type="button" @click="toggleAll()"
@@ -58,7 +58,7 @@
                         ? 'bg-slate-900 text-white hover:bg-slate-800'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'">
                     <i class="ri-checkbox-multiple-line text-base"></i>
-                    <span x-text="isAllSelected ? 'Hapus Semua' : 'Pilih Semua'"></span>
+                    <span x-text="isAllSelected ? 'Deselect All' : 'Select All'"></span>
                 </button>
             </div>
 
@@ -70,8 +70,8 @@
                 <div class="flex items-center gap-3 px-4 py-3 mb-6 rounded-xl bg-slate-50 border border-slate-100">
                     <i class="ri-information-line text-lg text-slate-400"></i>
                     <span class="text-sm text-slate-500 font-satoshi">
-                        <span class="font-satoshi-bold text-slate-700" x-text="checkedCount"></span> dari
-                        <span class="font-satoshi-bold text-slate-700" x-text="totalCount"></span> hak akses dipilih
+                        <span class="font-satoshi-bold text-slate-700" x-text="checkedCount"></span> of
+                        <span class="font-satoshi-bold text-slate-700" x-text="totalCount"></span> permissions selected
                     </span>
                 </div>
 
@@ -82,7 +82,7 @@
                         <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100">
                             <i class="ri-key-2-line text-slate-500"></i>
                         </div>
-                        <h6 class="text-sm font-satoshi-bold text-slate-700 uppercase tracking-wide">Permission Umum</h6>
+                        <h6 class="text-sm font-satoshi-bold text-slate-700 uppercase tracking-wide">General Permissions</h6>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                         @foreach($permissionData as $perm)
@@ -123,7 +123,7 @@
                             :class="isGroupSelected({{ json_encode(collect($group['items'])->pluck('id')) }})
                                 ? 'bg-slate-900 text-white hover:bg-slate-800'
                                 : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700'">
-                            <span x-text="isGroupSelected({{ json_encode(collect($group['items'])->pluck('id')) }}) ? 'Hapus Grup' : 'Pilih Grup'"></span>
+                            <span x-text="isGroupSelected({{ json_encode(collect($group['items'])->pluck('id')) }}) ? 'Deselect Group' : 'Select Group'"></span>
                         </button>
                     </div>
 
@@ -151,10 +151,10 @@
                 <!-- Submit / Cancel -->
                 <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
                     <x-ui.button type="button" font="medium" size="sm" style="secondary" onclick="window.location.href='{{ url('role') }}'">
-                        Batal
+                        Cancel
                     </x-ui.button>
                     <x-ui.button type="submit" font="bold" size="sm">
-                        Simpan
+                        Save
                     </x-ui.button>
                 </div>
             </form>

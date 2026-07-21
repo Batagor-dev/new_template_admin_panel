@@ -155,11 +155,11 @@ class UserController extends Controller
 
     // Cek apakah user sudah dibanned
     if ($user->banned_at) {
-        return redirect()->back()->with('info', 'User sudah dibanned.');
+        return redirect()->back()->with('info', __('messages.banned'));
     }
 
     // Lakukan banning
     $user->update(['banned_at' => now()]);
-    return redirect()->back()->with('success', 'User berhasil dibanned.');
+    return redirect()->back()->with('success', __('messages.banned'));
     }
 }

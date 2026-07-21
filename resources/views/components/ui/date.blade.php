@@ -1,7 +1,7 @@
 @props([
     'name' => '',
     'label' => '',
-    'placeholder' => 'Pilih tanggal...',
+    'placeholder' => 'Select date...',
     'value' => '',
     'type' => 'date', // date, time, datetime, multiple, range
     'humanFriendly' => false,

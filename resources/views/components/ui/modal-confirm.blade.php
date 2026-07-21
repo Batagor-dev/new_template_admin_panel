@@ -28,10 +28,10 @@
             </div>
             <div class="space-y-1">
                 <h3 class="text-lg font-satoshi-bold text-slate-900" id="confirm-modal-title">
-                    Apakah Anda yakin?
+                    Are you sure?
                 </h3>
                 <p class="text-sm font-satoshi-medium text-slate-500 leading-relaxed" id="confirm-modal-message">
-                    Tindakan ini tidak dapat dibatalkan. Data yang dihapus/banned akan dinonaktifkan dari sistem.
+                    This action cannot be undone. Deleted or banned data will be disabled from the system.
                 </p>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 size="sm" 
                 onclick="closeConfirmModal()"
             >
-                Batal
+                Cancel
             </x-ui.button>
             <x-ui.button 
                 type="button" 
@@ -52,7 +52,7 @@
                 size="sm" 
                 id="confirm-modal-btn"
             >
-                Ya, Konfirmasi
+                Yes, Confirm
             </x-ui.button>
         </div>
     </div>

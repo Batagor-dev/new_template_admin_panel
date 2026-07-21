@@ -18,7 +18,7 @@
         <div class="flex items-center justify-between mb-4">
             <h5 class="mb-0">{{$sub_title}}</h5>
             <x-ui.button href="{{ route('role.create') }}" color="primary" size="sm">
-                <i class="ri-add-line mr-1"></i> Tambah Role
+                <i class="ri-add-line mr-1"></i> Add Role
             </x-ui.button>
         </div>
         <div>

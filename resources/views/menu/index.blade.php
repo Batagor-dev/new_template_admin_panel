@@ -18,7 +18,7 @@
         <div class="flex items-center justify-between mb-4">
             <h5 class="text-lg font-satoshi-bold text-slate-900 mb-0">{{$sub_title}}</h5>
             <x-ui.button href="{{ route('menu.create') }}" color="primary" size="sm">
-                <i class="ri-add-line mr-1"></i> Tambah Menu
+                <i class="ri-add-line mr-1"></i> Add Menu
             </x-ui.button>
         </div>
         <div>

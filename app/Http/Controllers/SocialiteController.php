@@ -56,7 +56,7 @@ class SocialiteController extends Controller
         // Debug: Log error agar Anda tahu alasan pastinya di storage/logs/laravel.log
         \Log::error('Google Login Error: ' . $e->getMessage());
         
-        return redirect('/login')->with('error', 'Gagal login: ' . $e->getMessage());
+        return redirect('/login')->with('error', __('messages.login_failed', ['error' => $e->getMessage()]));
     }
 }
 }

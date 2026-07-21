@@ -25,7 +25,7 @@
                     <x-ui.select2 
                         name="roles" 
                         label="Roles" 
-                        placeholder="-- Pilih Role --" 
+                        placeholder="-- Select Role --" 
                         :multiple="true"
                         :options="$roles->pluck('name', 'name')->toArray()"
                         :value="old('roles', $user->roles->pluck('name')->toArray())"

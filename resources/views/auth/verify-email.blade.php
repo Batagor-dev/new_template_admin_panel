@@ -1,8 +1,8 @@
 @extends('layouts.auth.main')
 
-@section('title', 'Verifikasi Email')
-@section('subtitle', 'Satu langkah lagi untuk mengaktifkan akun.')
-@section('meta_description', 'Verifikasi alamat email akun Techarea Anda.')
+@section('title', 'Verify Email')
+@section('subtitle', 'One more step to activate your account.')
+@section('meta_description', 'Verify your account email address.')
 
 @section('content')
 <div class="space-y-5">
@@ -11,7 +11,7 @@
   @if(session('status') == 'verification-link-sent')
     <div class="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-satoshi-medium text-emerald-700">
       <i class="ri-checkbox-circle-line text-base shrink-0"></i>
-      <span>Email verifikasi berhasil dikirim ulang. Periksa kotak masuk Anda.</span>
+      <span>Verification email has been resent. Please check your inbox.</span>
     </div>
   @endif
 
@@ -21,9 +21,9 @@
       <i class="ri-mail-check-line text-xl"></i>
     </span>
     <div class="space-y-1">
-      <p class="text-sm font-satoshi-bold text-slate-800">Periksa kotak masuk Anda</p>
+      <p class="text-sm font-satoshi-bold text-slate-800">Check your inbox</p>
       <p class="text-sm font-satoshi-medium text-slate-500 leading-relaxed">
-        Kami telah mengirim tautan konfirmasi ke email Anda. Cek juga folder <strong class="text-slate-700">Spam</strong> jika tidak ada di kotak masuk.
+        We have sent a confirmation link to your email. Please also check your <strong class="text-slate-700">Spam</strong> folder if it is not in your inbox.
       </p>
     </div>
   </div>
@@ -33,7 +33,7 @@
     @csrf
     <x-ui.button type="submit" font="bold" size="md" class="w-full flex items-center justify-center gap-2">
       <i class="ri-refresh-line text-base"></i>
-      Kirim Ulang Email
+      Resend Email
     </x-ui.button>
   </form>
 

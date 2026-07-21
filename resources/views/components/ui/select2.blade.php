@@ -1,7 +1,7 @@
 @props([
     'name' => '',
     'label' => '',
-    'placeholder' => 'Pilih opsi...',
+    'placeholder' => 'Select option...',
     'multiple' => false,
     'options' => [],
     'value' => null
@@ -98,7 +98,7 @@
             <div class="sticky top-0 bg-white pb-2 pt-0.5">
                 <input type="text" 
                        x-model="search" 
-                       placeholder="Cari..." 
+                       placeholder="Search..." 
                        class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-slate-400 focus:bg-white transition"
                        @click.stop />
             </div>

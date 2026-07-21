@@ -1,6 +1,6 @@
 @props([
     'href',
-    'label' => 'Masuk dengan Google'
+    'label' => 'Sign in with Google'
 ])
 
 <a

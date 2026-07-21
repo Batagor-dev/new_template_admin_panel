@@ -1,7 +1,7 @@
 @extends('layouts.auth.main')
 
-@section('title', 'Verifikasi OTP')
-@section('subtitle', 'Masukkan kode OTP yang dikirim ke email Anda.')
+@section('title', 'OTP Verification')
+@section('subtitle', 'Enter the OTP code sent to your email.')
 
 @section('content')
   <div class="space-y-6">
@@ -21,19 +21,19 @@
       @csrf
 
       <div>
-        <label for="otp_code" class="mb-2 block text-sm font-medium text-slate-700">Kode OTP</label>
+        <label for="otp_code" class="mb-2 block text-sm font-medium text-slate-700">OTP Code</label>
         <x-ui.input id="otp_code" name="otp_code" type="text" value="{{ old('otp_code') }}" placeholder="123456" required class="w-full" />
       </div>
 
       <div>
-        <x-ui.button type="submit" font="bold" size="md" class="w-full">Verifikasi OTP</x-ui.button>
+        <x-ui.button type="submit" font="bold" size="md" class="w-full">Verify OTP</x-ui.button>
       </div>
     </form>
 
     <form method="POST" action="{{ route('verification.otp.resend') }}" class="space-y-4">
       @csrf
       <div>
-        <x-ui.button type="submit" font="bold" size="md" class="w-full bg-slate-100 text-slate-900 hover:bg-slate-200">Kirim Ulang OTP</x-ui.button>
+        <x-ui.button type="submit" font="bold" size="md" class="w-full bg-slate-100 text-slate-900 hover:bg-slate-200">Resend OTP</x-ui.button>
       </div>
     </form>
   </div>

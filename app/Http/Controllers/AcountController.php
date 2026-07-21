@@ -41,7 +41,7 @@ class AcountController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile berhasil diperbarui!');
+        return redirect()->back()->with('success', __('messages.profile_updated'));
     }
 
     public function security()
@@ -56,6 +56,6 @@ class AcountController extends Controller
         $user->password = bcrypt($request->newPassword);
         $user->save();
 
-        return redirect()->route('acount.security')->with('success', 'Password berhasil diubah!');
+        return redirect()->route('acount.security')->with('success', __('messages.password_updated'));
     }
 }

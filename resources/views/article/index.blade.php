@@ -19,7 +19,7 @@
             <h5 class="text-lg font-satoshi-bold text-slate-900 mb-0">{{ $sub_title }}</h5>
             @can('Article Create')
                 <x-ui.button href="{{ route('article.create') }}" color="primary" size="sm">
-                    <i class="ri-add-line mr-1"></i> Tambah Artikel
+                    <i class="ri-add-line mr-1"></i> Add Article
                 </x-ui.button>
             @endcan
         </div>

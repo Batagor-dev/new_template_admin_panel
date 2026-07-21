@@ -1,5 +1,5 @@
 @extends('errors.layout')
 
 @section('code', '403')
-@section('title', 'Akses Ditolak')
-@section('message', isset($exception) && $exception->getMessage() ? $exception->getMessage() : 'Maaf, Anda tidak memiliki izin untuk mengakses halaman ini.')
+@section('title', 'Access Denied')
+@section('message', isset($exception) && $exception->getMessage() ? $exception->getMessage() : 'Sorry, you do not have permission to access this page.')

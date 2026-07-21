@@ -17,8 +17,8 @@
 <div class="space-y-8 pb-12">
     <!-- Header Greeting -->
     <div>
-        <h1 class="text-2xl font-satoshi-bold tracking-tight text-slate-900">Selamat Datang Kembali, {{ Auth::user()->name }}!</h1>
-        <p class="text-base text-slate-500 mt-1">Berikut ringkasan statistik, analitik, dan aktivitas terbaru pada sistem Anda hari ini.</p>
+        <h1 class="text-2xl font-satoshi-bold tracking-tight text-slate-900">Welcome Back, {{ Auth::user()->name }}!</h1>
+        <p class="text-base text-slate-500 mt-1">Here is a summary of statistics, analytics, and recent activity on your system today.</p>
     </div>
 
     <!-- Quick Stats Grid -->
@@ -30,7 +30,7 @@
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white border border-slate-800">
                         <i class="ri-article-line text-lg"></i>
                     </div>
-                    <span class="text-sm font-satoshi-bold text-slate-900">Total Artikel</span>
+                    <span class="text-sm font-satoshi-bold text-slate-900">Total Articles</span>
                 </div>
             </div>
             <div class="mt-4">
@@ -40,7 +40,7 @@
                         <i class="ri-arrow-up-line"></i> 12%
                     </span>
                 </div>
-                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Artikel aktif rilis minggu ini</p>
+                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Active articles published this week</p>
             </div>
         </x-ui.card>
 
@@ -51,17 +51,17 @@
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white border border-slate-800">
                         <i class="ri-folder-line text-lg"></i>
                     </div>
-                    <span class="text-sm font-satoshi-bold text-slate-900">Kategori</span>
+                    <span class="text-sm font-satoshi-bold text-slate-900">Categories</span>
                 </div>
             </div>
             <div class="mt-4">
                 <div class="flex items-baseline gap-2">
                     <h3 class="text-2xl font-satoshi-bold tracking-tight text-slate-900">{{ $total_categories }}</h3>
                     <span class="inline-flex items-center gap-0.5 text-xs font-satoshi-semibold text-slate-500">
-                        Stabil
+                        Stable
                     </span>
                 </div>
-                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Kelompok kategori sistem</p>
+                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">System category groups</p>
             </div>
         </x-ui.card>
 
@@ -72,7 +72,7 @@
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white border border-slate-800">
                         <i class="ri-user-line text-lg"></i>
                     </div>
-                    <span class="text-sm font-satoshi-bold text-slate-900">Total Pengguna</span>
+                    <span class="text-sm font-satoshi-bold text-slate-900">Total Users</span>
                 </div>
             </div>
             <div class="mt-4">
@@ -82,7 +82,7 @@
                         <i class="ri-arrow-up-line"></i> +4
                     </span>
                 </div>
-                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Akun terdaftar hari ini</p>
+                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Accounts registered today</p>
             </div>
         </x-ui.card>
 
@@ -93,7 +93,7 @@
                     <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white border border-slate-800">
                         <i class="ri-eye-line text-lg"></i>
                     </div>
-                    <span class="text-sm font-satoshi-bold text-slate-900">Kunjungan</span>
+                    <span class="text-sm font-satoshi-bold text-slate-900">Visits</span>
                 </div>
             </div>
             <div class="mt-4">
@@ -103,7 +103,7 @@
                         <i class="ri-arrow-down-line"></i> -2%
                     </span>
                 </div>
-                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Pengunjung unik kemarin</p>
+                <p class="text-xs font-satoshi-medium text-slate-500 mt-1">Unique visitors yesterday</p>
             </div>
         </x-ui.card>
     </div>
@@ -114,13 +114,13 @@
         <x-ui.card class="lg:col-span-2 p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                 <div>
-                    <h3 class="font-satoshi-bold text-slate-900 text-base">Analitik Pengunjung</h3>
-                    <p class="text-xs text-slate-500">Statistik performa kunjungan dan interaksi 12 bulan terakhir</p>
+                    <h3 class="font-satoshi-bold text-slate-900 text-base">Visitor Analytics</h3>
+                    <p class="text-xs text-slate-500">Visit performance and interaction statistics for the past 12 months</p>
                 </div>
                 <div class="flex items-center gap-1.5 text-xs font-satoshi-semibold text-slate-500">
                     <span>Filter:</span>
                     <button class="flex items-center gap-0.5 text-slate-900 font-satoshi-bold hover:underline">
-                        Tahun Ini <i class="ri-arrow-down-s-line"></i>
+                        This Year <i class="ri-arrow-down-s-line"></i>
                     </button>
                 </div>
             </div>
@@ -131,10 +131,10 @@
                     type="bar"
                     height="280"
                     :series="[
-                        ['name' => 'Pengunjung Unik', 'data' => [1200, 1900, 3200, 5400, 4800, 6000, 7300, 8600, 9200, 8000, 9000, 9600]],
-                        ['name' => 'Interaksi Halaman', 'data' => [800, 1400, 2300, 4100, 3500, 4500, 5800, 6900, 7500, 6200, 7100, 7900]]
+                        ['name' => 'Unique Visitors', 'data' => [1200, 1900, 3200, 5400, 4800, 6000, 7300, 8600, 9200, 8000, 9000, 9600]],
+                        ['name' => 'Page Interactions', 'data' => [800, 1400, 2300, 4100, 3500, 4500, 5800, 6900, 7500, 6200, 7100, 7900]]
                     ]"
-                    :labels="['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']"
+                    :labels="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']"
                     :colors="['#0f172a', '#6366f1']"
                 />
             </div>
@@ -143,8 +143,8 @@
         <!-- Server Capacity Card (Radial Bar Chart) -->
         <x-ui.card class="p-6 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
             <div class="border-b border-slate-100 pb-4 mb-6">
-                <h3 class="font-satoshi-bold text-slate-900 text-base">Kapasitas Server</h3>
-                <p class="text-xs text-slate-500">Beban penggunaan resource hosting secara real-time</p>
+                <h3 class="font-satoshi-bold text-slate-900 text-base">Server Capacity</h3>
+                <p class="text-xs text-slate-500">Real-time hosting resource load</p>
             </div>
             
             <div class="flex-1 flex items-center justify-center py-2">
@@ -158,7 +158,7 @@
             </div>
 
             <div class="mt-4 pt-3 text-[11px] text-slate-500 border-t border-slate-50 flex items-center gap-1.5">
-                <i class="ri-refresh-line animate-spin text-slate-300"></i> Disinkronkan otomatis 1 menit yang lalu.
+                <i class="ri-refresh-line animate-spin text-slate-300"></i> Auto-synced 1 minute ago.
             </div>
         </x-ui.card>
     </div>
@@ -168,18 +168,18 @@
         <!-- Recent Articles Card -->
         <x-ui.card class="p-6 flex flex-col hover:shadow-xl transition-all duration-300">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-                <h3 class="font-satoshi-bold text-slate-900 text-base">Artikel Terbaru</h3>
-                <a href="{{ route('article.index') }}" class="text-xs font-satoshi-semibold text-slate-500 hover:text-slate-900 hover:underline transition-all">Lihat Semua</a>
+                <h3 class="font-satoshi-bold text-slate-900 text-base">Recent Articles</h3>
+                <a href="{{ route('article.index') }}" class="text-xs font-satoshi-semibold text-slate-500 hover:text-slate-900 hover:underline transition-all">View All</a>
             </div>
             <div class="flex-1 overflow-x-auto">
                 <table class="w-full text-left text-sm text-slate-600">
                     <thead>
                         <tr class="text-slate-900 font-satoshi-semibold border-b border-slate-100 text-xs uppercase">
-                            <th class="py-3 pr-4">Judul Artikel</th>
-                            <th class="py-3 px-4">Kategori</th>
-                            <th class="py-3 px-4">Penulis</th>
+                            <th class="py-3 pr-4">Article Title</th>
+                            <th class="py-3 px-4">Category</th>
+                            <th class="py-3 px-4">Author</th>
                             <th class="py-3 px-4">Status</th>
-                            <th class="py-3 pl-4 text-right">Tanggal</th>
+                            <th class="py-3 pl-4 text-right">Date</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50 font-satoshi-medium text-slate-700">
@@ -204,7 +204,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="py-8 text-center text-slate-400 font-satoshi-regular">
-                                    Belum ada artikel yang tersedia di database.
+                                    No articles available in the database yet.
                                 </td>
                             </tr>
                         @endforelse
@@ -216,19 +216,19 @@
 
     <!-- User Contributors & Activity Logs -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <!-- Top Authors Widget (Mengikuti Gaya Visual Gambar 2) -->
+        <!-- Top Authors Widget -->
         <x-ui.card class="p-6">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
                 <div>
-                    <h3 class="font-satoshi-bold text-slate-900 text-base">Penulis Teraktif</h3>
-                    <p class="text-xs text-slate-500">Kontributor artikel bulan ini</p>
+                    <h3 class="font-satoshi-bold text-slate-900 text-base">Top Authors</h3>
+                    <p class="text-xs text-slate-500">Article contributors this month</p>
                 </div>
                 <button class="text-slate-300 hover:text-slate-500 transition-colors">
                     <i class="ri-more-fill text-lg"></i>
                 </button>
             </div>
             
-            <!-- List Author (Identik dengan format list di Gambar 2) -->
+            <!-- List Author -->
             <div class="divide-y divide-slate-100/60">
                 <!-- User 1 -->
                 <div class="flex items-center justify-between py-3.5 first:pt-0 last:pb-0">
@@ -242,7 +242,7 @@
                         </div>
                     </div>
                     <x-ui.badge variant="primary" icon="ri-bookmark-3-line">
-                        42 Post
+                        42 Posts
                     </x-ui.badge>
                 </div>
                 <!-- User 2 -->
@@ -257,7 +257,7 @@
                         </div>
                     </div>
                     <x-ui.badge variant="primary" icon="ri-bookmark-3-line">
-                        28 Post
+                        28 Posts
                     </x-ui.badge>
                 </div>
                 <!-- User 3 -->
@@ -272,7 +272,7 @@
                         </div>
                     </div>
                     <x-ui.badge variant="primary" icon="ri-bookmark-3-line">
-                        14 Post
+                        14 Posts
                     </x-ui.badge>
                 </div>
             </div>
@@ -281,8 +281,8 @@
         <!-- System Logs Card -->
         <x-ui.card class="lg:col-span-2 p-6 hover:shadow-xl transition-all duration-300">
             <div class="border-b border-slate-100 pb-4 mb-4">
-                <h3 class="font-satoshi-bold text-slate-900 text-base">Log Aktivitas Sistem</h3>
-                <p class="text-xs text-slate-500">Riwayat operasi krusial pada aplikasi</p>
+                <h3 class="font-satoshi-bold text-slate-900 text-base">System Activity Logs</h3>
+                <p class="text-xs text-slate-500">History of crucial application operations</p>
             </div>
             <div class="space-y-4">
                 <!-- Log 1 -->
@@ -291,8 +291,8 @@
                         <i class="ri-check-line text-base"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="font-satoshi-semibold text-slate-900 text-sm">Backup otomatis database berhasil dijalankan.</p>
-                        <span class="text-xs text-slate-500">Hari ini, 04:00 AM</span>
+                        <p class="font-satoshi-semibold text-slate-900 text-sm">Automated database backup completed successfully.</p>
+                        <span class="text-xs text-slate-500">Today, 04:00 AM</span>
                     </div>
                 </div>
                 <!-- Log 2 -->
@@ -301,8 +301,8 @@
                         <i class="ri-user-add-line text-base"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="font-satoshi-semibold text-slate-900 text-sm">Sinkronisasi metadata artikel baru selesai dilakukan.</p>
-                        <span class="text-xs text-slate-500">Kemarin, 08:14 PM</span>
+                        <p class="font-satoshi-semibold text-slate-900 text-sm">New article metadata synchronization completed.</p>
+                        <span class="text-xs text-slate-500">Yesterday, 08:14 PM</span>
                     </div>
                 </div>
                 <!-- Log 3 -->
@@ -311,7 +311,7 @@
                         <i class="ri-shield-flash-line text-base"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="font-satoshi-semibold text-slate-900 text-sm">Percobaan login gagal terdeteksi dari IP 192.168.1.105 (3 kali salah).</p>
+                        <p class="font-satoshi-semibold text-slate-900 text-sm">Failed login attempt detected from IP 192.168.1.105 (3 failed attempts).</p>
                         <span class="text-xs text-slate-500">11 Jul 2026, 11:22 AM</span>
                     </div>
                 </div>
