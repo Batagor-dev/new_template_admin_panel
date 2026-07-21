@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\ArticleCategory;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Services\ImageService;
 
 class ArticleController extends Controller
 {
@@ -32,11 +33,19 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, ImageService $imageService)
     {
         $data = $request->all();
         $data['highlite'] = $request->has('highlite');
-        $data['image_path'] = $request->file('image')->store('article-images', 'public');
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $compressed = $imageService->compress($file);
+            $filename = 'article-images/' . uniqid() . '.jpg';
+            Storage::disk('public')->put($filename, $compressed);
+            $data['image_path'] = $filename;
+        }
+
         $data['published_at'] = date('Y-m-d', strtotime($request->published_at));
         $data['user_id'] = auth()->id();
         $data['excerpt'] = Str::limit(strip_tags($request->content), 200);
@@ -61,7 +70,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateArticleRequest $request, Article $article)
+    public function update(UpdateArticleRequest $request, Article $article, ImageService $imageService)
     {
         $data = $request->all();
 
@@ -72,14 +81,19 @@ class ArticleController extends Controller
         $data['published_at'] = date('Y-m-d', strtotime($request->published_at));
 
         // Auto generate excerpt
-        $data['excerpt'] = \Str::limit(strip_tags($request->content), 200);
+        $data['excerpt'] = Str::limit(strip_tags($request->content), 200);
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            if ($article->image_path) {
-                \Storage::disk('public')->delete($article->image_path);
+            if ($article->image_path && Storage::disk('public')->exists($article->image_path)) {
+                Storage::disk('public')->delete($article->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('article-images', 'public');
+
+            $file = $request->file('image');
+            $compressed = $imageService->compress($file);
+            $filename = 'article-images/' . uniqid() . '.jpg';
+            Storage::disk('public')->put($filename, $compressed);
+            $data['image_path'] = $filename;
         }
 
         // Update langsung (slug akan diurus oleh HasSlug trait)

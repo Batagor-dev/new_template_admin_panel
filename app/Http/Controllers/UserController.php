@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\DataTables\UserDataTable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageService;
 
 class UserController extends Controller
 {
@@ -43,16 +44,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request, ImageService $imageService)
     {
         $data = $request->validated();
 
         if ($request->hasFile('foto')) {
-            // Generate nama file unik agar tidak bertabrakan
-            $fileName = time() . '.' . $request->foto->extension();
+            $file = $request->file('foto');
+            $compressed = $imageService->compress($file);
+            $fileName = time() . '_' . uniqid() . '.jpg';
             
-            // Menyimpan file ke storage/app/public/uploads/users
-            $request->file('foto')->storeAs('uploads/users', $fileName, 'public');
+            Storage::disk('public')->put('uploads/users/' . $fileName, $compressed);
             
             $data['foto'] = $fileName;
         } else {
@@ -88,7 +89,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user, ImageService $imageService)
     {
         // Ambil data hasil validasi
         $validatedData = $request->validated();
@@ -102,11 +103,11 @@ class UserController extends Controller
                 }
             }
 
-            // Generate nama file unik agar tidak bertabrakan
-            $fileName = time() . '.' . $request->foto->extension();
+            $file = $request->file('foto');
+            $compressed = $imageService->compress($file);
+            $fileName = time() . '_' . uniqid() . '.jpg';
             
-            // Menyimpan file ke storage/app/public/uploads/users
-            $request->file('foto')->storeAs('uploads/users', $fileName, 'public');
+            Storage::disk('public')->put('uploads/users/' . $fileName, $compressed);
             
             $validatedData['foto'] = $fileName;
         }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreSettingRequest;
 use App\Models\Setting;
+use App\Services\ImageService;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -22,7 +24,7 @@ class SettingController extends Controller
         ]);
     }
 
-    public function store(StoreSettingRequest $request)
+    public function store(StoreSettingRequest $request, ImageService $imageService)
     {
         abort_if(Gate::denies('Setting Access'), 403);
 
@@ -31,8 +33,11 @@ class SettingController extends Controller
         /* ---------- handle favicon ---------- */
         if ($request->hasFile('favicon')) {
             Setting::deleteOldFile('favicon');          // hapus lama
-            $payload['favicon'] = $request->file('favicon')
-                                          ->store('settings', 'public');
+            $file = $request->file('favicon');
+            $compressed = $imageService->compress($file);
+            $filename = 'settings/' . uniqid() . '.jpg';
+            Storage::disk('public')->put($filename, $compressed);
+            $payload['favicon'] = $filename;
         }
 
         /* ---------- keyword jadi array ---------- */

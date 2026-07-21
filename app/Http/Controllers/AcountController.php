@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Http\Requests\UpdateAcountRequest;
+use App\Services\ImageService;
+use Illuminate\Support\Facades\Storage;
 
 class AcountController extends Controller
 {
@@ -16,7 +18,7 @@ class AcountController extends Controller
         return view('acount.index', compact('user'));
     }
 
-    public function store(UpdateAcountRequest $request)
+    public function store(UpdateAcountRequest $request, ImageService $imageService)
     {
         $user = Auth::user();
         $validatedData = $request->validated();
@@ -26,14 +28,14 @@ class AcountController extends Controller
 
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
+            $compressed = $imageService->compress($file);
             $filename = time() . '.jpg';
 
-            // Simpan file hasil crop ke uploads/users
-            $file->storeAs('uploads/users', $filename, 'public');
+            Storage::disk('public')->put('uploads/users/' . $filename, $compressed);
 
             // Hapus foto lama jika bukan default avatar
-            if ($user->foto && !str_starts_with($user->foto, 'avatar-') && \Storage::disk('public')->exists('uploads/users/' . $user->foto)) {
-                \Storage::disk('public')->delete('uploads/users/' . $user->foto);
+            if ($user->foto && !str_starts_with($user->foto, 'avatar-') && Storage::disk('public')->exists('uploads/users/' . $user->foto)) {
+                Storage::disk('public')->delete('uploads/users/' . $user->foto);
             }
 
             $user->foto = $filename;
