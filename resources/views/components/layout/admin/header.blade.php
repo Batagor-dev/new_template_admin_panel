@@ -13,6 +13,29 @@
   </div>
 
   <div class="flex items-center gap-4">
+    <!-- Outlet Selector -->
+    @auth
+        @if(count($userOutlets ?? []) > 0 || ($isSuperOrOwner ?? false))
+            <form action="{{ route('outlet.switch') }}" method="POST" id="outlet-switch-form" class="m-0 flex items-center">
+                @csrf
+                <div class="relative min-w-[200px]" x-data @select2-change="document.getElementById('outlet-switch-form').submit()">
+                    <x-ui.select2
+                        name="outlet_id"
+                        placeholder="Select Outlet"
+                        :value="$selectedValue ?? 'all'"
+                    >
+                        @if($isSuperOrOwner ?? false)
+                            <option value="all">All Outlets</option>
+                        @endif
+                        @foreach($userOutlets ?? [] as $outlet)
+                            <option value="{{ $outlet->id }}">{{ $outlet->name }}</option>
+                        @endforeach
+                    </x-ui.select2>
+                </div>
+            </form>
+        @endif
+    @endauth
+
     <!-- Fullscreen Button -->
     <button type="button" id="btn-fullscreen" class="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer">
       <i class="ri-fullscreen-line text-2xl"></i>
@@ -58,7 +81,7 @@
                 </h3>
 
                 <p class="mt-0.5 text-xs font-satoshi-medium text-slate-500 truncate">
-                    {{ Auth::user()->getRoleNames()->first() ?? 'User' }}
+                    {{ $userRoleName ?? (Auth::user()?->getRoleNames()->first() ?? 'User') }}
                 </p>
             </div>
         </div>
